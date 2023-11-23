@@ -11,11 +11,11 @@ import org.example.App;
 import org.example.conexion.Connect;
 import org.example.model.DAO.AlbumDAO;
 import org.example.model.DAO.ArtistDAO;
-import org.example.model.dto.Album;
+import org.example.model.domain.Album;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import org.example.model.dto.Artist;
+import org.example.model.domain.Artist;
 
 import java.io.IOException;
 import java.sql.Connection;

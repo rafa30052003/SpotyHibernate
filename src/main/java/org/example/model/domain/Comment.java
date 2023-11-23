@@ -1,4 +1,4 @@
-package org.example.model.dto;
+package org.example.model.domain;
 
 public class Comment {
     private  int id;

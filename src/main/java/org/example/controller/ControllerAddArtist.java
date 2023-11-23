@@ -12,8 +12,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.App;
 import org.example.model.DAO.ArtistDAO;
-import org.example.model.dto.Artist;
-import org.example.model.dto.Nationality;
+import org.example.model.domain.Artist;
+import org.example.model.domain.Nationality;
 
 import java.io.File;
 import java.io.FileInputStream;

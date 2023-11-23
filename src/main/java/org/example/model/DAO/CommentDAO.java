@@ -2,12 +2,8 @@ package org.example.model.DAO;
 
 import org.example.conexion.Connect;
 import org.example.interfaceDAO.iDAO;
-import org.example.model.dto.Album;
-import org.example.model.dto.Comment;
-import org.example.model.dto.User;
-import org.example.model.dto.list;
+import org.example.model.domain.Comment;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

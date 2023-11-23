@@ -1,4 +1,4 @@
-package org.example.model.dto;
+package org.example.model.domain;
 
 import java.util.Date;
 import java.util.Objects;

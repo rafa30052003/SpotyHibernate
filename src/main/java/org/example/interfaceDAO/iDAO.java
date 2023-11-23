@@ -1,5 +1,4 @@
 package org.example.interfaceDAO;
-import org.example.model.dto.Artist;
 
 import java.sql.SQLException;
 import java.util.List;

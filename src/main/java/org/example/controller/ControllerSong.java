@@ -13,7 +13,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -22,10 +21,8 @@ import org.example.model.DAO.AlbumDAO;
 import org.example.model.DAO.SongDAO;
 
 
-import org.example.model.dto.Album;
-import org.example.model.dto.Artist;
-import org.example.model.dto.Nationality;
-import org.example.model.dto.Song;
+import org.example.model.domain.Album;
+import org.example.model.domain.Song;
 
 import java.io.IOException;
 import java.net.URL;

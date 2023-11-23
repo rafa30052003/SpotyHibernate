@@ -11,19 +11,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.App;
 import org.example.model.DAO.AlbumDAO;
-import org.example.model.DAO.ArtistDAO;
 import org.example.model.DAO.SongDAO;
-import org.example.model.dto.Album;
-import org.example.model.dto.Artist;
-import org.example.model.dto.Nationality;
-import org.example.model.dto.Song;
+import org.example.model.domain.Album;
+import org.example.model.domain.Song;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 

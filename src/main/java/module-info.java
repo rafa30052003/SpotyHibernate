@@ -11,7 +11,7 @@ module org.example {
     opens org.example.conexion to java.xml.bind; // Corregido el nombre de la carpeta
 
     exports org.example;
-    exports org.example.model.dto;
+    exports org.example.model.domain;
     exports org.example.controller;
 
     opens org.example.controller to javafx.fxml;

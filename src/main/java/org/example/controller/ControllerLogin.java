@@ -7,7 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.App;
 import org.example.model.DAO.UserDAO;
-import org.example.model.dto.User;
+import org.example.model.domain.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;

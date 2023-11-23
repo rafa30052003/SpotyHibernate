@@ -9,8 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import org.example.model.DAO.CommentDAO;
 import org.example.model.DAO.ListDAO;
-import org.example.model.dto.Comment;
-import org.example.model.dto.list;
+import org.example.model.domain.Comment;
 
 import java.net.URL;
 import java.sql.SQLException;

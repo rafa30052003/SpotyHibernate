@@ -2,10 +2,9 @@ package org.example.model.DAO;
 
 import org.example.conexion.Connect;
 import org.example.interfaceDAO.iDAO;
-import org.example.model.dto.Album;
+import org.example.model.domain.Album;
 
-import org.example.model.dto.Artist;
-import org.example.model.dto.Song;
+import org.example.model.domain.Song;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

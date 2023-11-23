@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.App;
 import org.example.model.DAO.UserDAO;
-import org.example.model.dto.User;
+import org.example.model.domain.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.File;

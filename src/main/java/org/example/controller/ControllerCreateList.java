@@ -6,12 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.example.model.DAO.ListDAO;
-import org.example.model.DAO.UserDAO;
-import org.example.model.dto.User;
-import org.example.model.dto.list;
+import org.example.model.domain.list;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class ControllerCreateList {
     @FXML

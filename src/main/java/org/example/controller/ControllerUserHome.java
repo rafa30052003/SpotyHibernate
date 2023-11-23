@@ -19,7 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.App;
 import org.example.model.DAO.*;
-import org.example.model.dto.*;
+import org.example.model.domain.*;
 import org.mindrot.jbcrypt.BCrypt;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -30,7 +30,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 

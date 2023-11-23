@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.example.conexion.Connect;
 import org.example.interfaceDAO.iDAO;
-import org.example.model.dto.Album;
-import org.example.model.dto.Song;
-import org.example.model.dto.list;
+import org.example.model.domain.Album;
+import org.example.model.domain.Song;
+import org.example.model.domain.list;
 
 public class ListDAO extends list implements iDAO<list, Integer> {
     private final static String FINDALL ="SELECT id, description, name_list, name_user FROM list";
