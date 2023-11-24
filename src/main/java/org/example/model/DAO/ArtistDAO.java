@@ -1,6 +1,5 @@
 package org.example.model.DAO;
 
-import org.example.conexion.Connect;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.Artist;
 import org.example.model.domain.Nationality;
