@@ -1,10 +1,19 @@
 package org.example.model.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.*;
+@Entity
+@Table (name = "ARTIST")
+public class Artist implements Serializable {
 
-public class Artist {
+    private static final long serialVersionUID=1L;
+    @Id
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "NATIONALITY")
     private Nationality nationality;
+    @Column(name = "PHOTO")
     private String photo;
 
     public Artist() {

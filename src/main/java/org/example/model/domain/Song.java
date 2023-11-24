@@ -1,15 +1,30 @@
 package org.example.model.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
-
-public class Song {
+import javax.persistence.*;
+@Entity
+@Table(name = "SONG")
+public class Song implements Serializable {
+    private static final long serialVersionUID=1L;
+    @Id
+    @Column(name = "ID")
     private int id;
+    @Column(name = "NAME_SONG")
     private String name_song;
+    @Column(name = "GENDER")
     private String gender;
+    @Column(name = "NREPO")
     private int nrepro;
+    @Column(name = "DURATION")
     private String duration;
-    private Album album;
+    @Column(name = "ARCHIVE_SONG")
     private String archive_song;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NAME_ALBUM")
+    private Album album;
+
 
     public Song(int id, String name_song, String gender, int nrepro, String duration, Album album, String archive_song) {
         this.id = id;
