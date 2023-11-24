@@ -1,12 +1,29 @@
 package org.example.model.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class User {
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
+    private  static  final long serialVersionUID=1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "name")
     private String name;
+    @Column(name = "mail")
     private String mail;
+    @Column(name = "photo")
     private String photo;
+    @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+    public User() {
+    }
 
     public User(String name, String mail, String photo, String password) {
         this.name = name;
@@ -15,9 +32,7 @@ public class User {
         this.password = password;
     }
 
-    public User() {
 
-    }
 
     public String getName() {
         return name;
