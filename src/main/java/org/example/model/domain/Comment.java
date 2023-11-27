@@ -1,5 +1,7 @@
 package org.example.model.domain;
 
+import org.example.model.domain.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -8,15 +10,11 @@ import java.util.List;
 @Table(name = "comment")
 public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private  int id;
-    @Column(name = "name_user")
-    private  String name_user;
-    @Column(name = "id_list")
-    private int id_list;
-    @Column(name = "comment")
-    private  String comment;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -24,49 +22,46 @@ public class Comment implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "list_id", referencedColumnName = "id")
-    private List list;
+    private list myList;
 
-    public Comment(int id, String name_user, int id_list, String comment) {
-        this.id = id;
-        this.name_user = name_user;
-        this.id_list = id_list;
-        this.comment = comment;
-    }
-
-    public Comment(String commentText) {
-        this.comment = commentText;
-    }
+    @Column(name = "comment")
+    private String comment;
 
     public Comment() {
+    }
 
+    public Comment(User user, List myList, String comment) {
+        this.user = user;
+        this.myList = myList;
+        this.comment = comment;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public User getUser() {
+        return user;
     }
 
-    public String getName_user() {
-        return name_user;
-    }
-
-    public void setName_user(String name_user) {
-        this.name_user = name_user;
-    }
-
-    public int getId_list() {
-        return id_list;
-    }
-
-    public void setId_list(int id_list) {
-        this.id_list = id_list;
+    public List getMyList() {
+        return myList;
     }
 
     public String getComment() {
         return comment;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setMyList(List myList) {
+        this.myList = myList;
     }
 
     public void setComment(String comment) {
@@ -77,8 +72,8 @@ public class Comment implements Serializable {
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", name_user='" + name_user + '\'' +
-                ", id_list=" + id_list +
+                ", user=" + user +
+                ", myList=" + myList +
                 ", comment='" + comment + '\'' +
                 '}';
     }

@@ -78,30 +78,25 @@ public class ControllerAddComment implements Initializable {
      */
     @FXML
     public void addComment(ActionEvent event) {
-        try {
-            CommentDAO commentDAO = new CommentDAO();
-            String comment = textComment.getText();
+        CommentDAO commentDAO = new CommentDAO();
+        String comment = textComment.getText();
 
 
-            if (selectedListId != -1) {
-                String name_user = ControllerLogin.getLoggedInUserName();
-                Comment newComment = new Comment(0, name_user, selectedListId, comment);
-                commentDAO.save(newComment);
+        if (selectedListId != -1) {
+            String name_user = ControllerLogin.getLoggedInUserName();
+            Comment newComment = new Comment(0, name_user, selectedListId, comment);
+            commentDAO.create(newComment);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Comentario");
-                alert.setHeaderText(null);
-                alert.setContentText("Comentario agregado");
-                alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Comentario");
+            alert.setHeaderText(null);
+            alert.setContentText("Comentario agregado");
+            alert.showAndWait();
 
-                // Limpia los campos de texto después de agregar el comentario
-                textComment.clear();
-            } else {
-                showValidationError("Seleccione una lista antes de agregar un comentario.");
-            }
-        } catch (SQLException e) {
-            showValidationError("Error de base de datos al agregar el comentario.");
-            e.printStackTrace();
+            // Limpia los campos de texto después de agregar el comentario
+            textComment.clear();
+        } else {
+            showValidationError("Seleccione una lista antes de agregar un comentario.");
         }
     }
     //mensages de error

@@ -74,43 +74,34 @@ public class ControllerAddUser {
                 return;
             }
 
-            try {
-                User existingUser = userDAO.findByNameUser(name);
+            User existingUser = userDAO.findUserByName(name);
 
-                if (existingUser != null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Nombre duplicado");
-                    alert.setHeaderText(null);
-                    alert.setContentText("El nombre de usuario ya existe. Por favor, elija otro.");
-                    alert.showAndWait();
-                    return;
-                }
-
-                // Hashear la contraseña antes de guardarla
-                String hashedPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
-
-                User newUser = new User(name, mail, photoPath, hashedPassword);
-                userDAO.save(newUser);
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Usuario Agregado");
-                alert.setHeaderText(null);
-                alert.setContentText("Usuario creado con éxito");
-                alert.showAndWait();
-
-                // Limpia los campos de texto después de agregar el usuario
-                textName.clear();
-                textmail.clear();
-                password.clear();
-                photoPath = ""; // Restablece la ruta de la imagen
-            } catch (SQLException e) {
+            if (existingUser != null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error de base de datos");
+                alert.setTitle("Nombre duplicado");
                 alert.setHeaderText(null);
-                alert.setContentText("No se pudo crear el usuario en la base de datos.");
+                alert.setContentText("El nombre de usuario ya existe. Por favor, elija otro.");
                 alert.showAndWait();
-                e.printStackTrace();
+                return;
             }
+
+            // Hashear la contraseña antes de guardarla
+            String hashedPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
+
+            User newUser = new User(name, mail, photoPath, hashedPassword);
+            userDAO.save(newUser);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Usuario Agregado");
+            alert.setHeaderText(null);
+            alert.setContentText("Usuario creado con éxito");
+            alert.showAndWait();
+
+            // Limpia los campos de texto después de agregar el usuario
+            textName.clear();
+            textmail.clear();
+            password.clear();
+            photoPath = ""; // Restablece la ruta de la imagen
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campos incompletos");
