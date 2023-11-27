@@ -370,49 +370,40 @@ public class ControllerUserHome {
             photoPath = currentPhotoPath; // Mantén la foto actual si no se selecciona una nueva
         }
 
-        try {
-            // Verifica si se ha modificado el nombre de usuario
-            if (!name.equals(currentName)) {
-                // Verifica si el nuevo nombre ya existe
-                User existingUser = userDAO.findByNameUser(name);
-                if (existingUser != null && !existingUser.getName().equals(currentName)) {
-                    showValidationError("El nombre de usuario ya existe. Por favor, elija otro.");
-                    return;
-                }
+        // Verifica si se ha modificado el nombre de usuario
+        if (!name.equals(currentName)) {
+            // Verifica si el nuevo nombre ya existe
+            User existingUser = userDAO.findUserByName(name);
+            if (existingUser != null && !existingUser.getName().equals(currentName)) {
+                showValidationError("El nombre de usuario ya existe. Por favor, elija otro.");
+                return;
             }
-
-            // Actualiza los campos del usuario con los valores ingresados
-            loggedInUser.setName(name);
-            loggedInUser.setMail(mail);
-
-            // Comprueba si se ha modificado la contraseña
-            if (!userPassword.isEmpty()) {
-                // Hashear la nueva contraseña antes de guardarla
-                userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
-                loggedInUser.setPassword(userPassword);
-            }
-
-            // Actualiza la foto actual del usuario
-            loggedInUser.setPhoto(photoPath);
-
-            // Realiza la operación de actualización en la base de datos
-            userDAO.update(loggedInUser);
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Usuario Modificado");
-            alert.setHeaderText(null);
-            alert.setContentText("Usuario modificado con éxito");
-            alert.showAndWait();
-
-            // No necesitas limpiar los campos de texto después de modificar el usuario, ya que se reflejarán los nuevos valores
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de base de datos");
-            alert.setHeaderText(null);
-            alert.setContentText("No se pudo modificar el usuario en la base de datos.");
-            alert.showAndWait();
-            e.printStackTrace();
         }
+
+        // Actualiza los campos del usuario con los valores ingresados
+        loggedInUser.setName(name);
+        loggedInUser.setMail(mail);
+
+        // Comprueba si se ha modificado la contraseña
+        if (!userPassword.isEmpty()) {
+            // Hashear la nueva contraseña antes de guardarla
+            userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
+            loggedInUser.setPassword(userPassword);
+        }
+
+        // Actualiza la foto actual del usuario
+        loggedInUser.setPhoto(photoPath);
+
+        // Realiza la operación de actualización en la base de datos
+        userDAO.update(loggedInUser);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Usuario Modificado");
+        alert.setHeaderText(null);
+        alert.setContentText("Usuario modificado con éxito");
+        alert.showAndWait();
+
+        // No necesitas limpiar los campos de texto después de modificar el usuario, ya que se reflejarán los nuevos valores
     }
 
     /**
@@ -438,7 +429,7 @@ public class ControllerUserHome {
                 try {
                     UserDAO userDAO = new UserDAO();
                     // Buscar el usuario en la base de datos
-                    User userToDelete = userDAO.findByNameUser(loggedInUserName);
+                    User userToDelete = userDAO.findUserByName(loggedInUserName);
                     if (userToDelete != null) {
                         // Eliminar el usuario
                         userDAO.delete(userToDelete);
@@ -447,7 +438,7 @@ public class ControllerUserHome {
                         showInformation("Cuenta eliminada", "Su cuenta ha sido eliminada correctamente.");
                         App.setRoot("login");
                     }
-                } catch (SQLException | IOException e) {
+                } catch (IOException e) {
                     // Manejar errores de eliminación de cuenta
                     showValidationError("No se pudo eliminar la cuenta. Por favor, inténtelo de nuevo más tarde.");
                 }
@@ -802,12 +793,8 @@ public class ControllerUserHome {
 
         if (loggedInUserName != null && selectedListId > 0) {
             // Llama a la función para agregar una suscripción
-            try {
-                userDAO.addSubscription(selectedListId, loggedInUserName);
-                showInformation("Suscripción Agregada", "Has sido suscrito a la lista seleccionada.");
-            } catch (SQLException e) {
-                showValidationError("No se pudo agregar la suscripción. Por favor, inténtelo de nuevo más tarde.");
-            }
+            userDAO.addSubscription(loggedInUserName, selectedListId);
+            showInformation("Suscripción Agregada", "Has sido suscrito a la lista seleccionada.");
         } else {
             showValidationError("Por favor, seleccione una lista para suscribirse.");
         }
@@ -824,12 +811,8 @@ public class ControllerUserHome {
 
         if (loggedInUserName != null && selectedListId > 0) {
             // Llama a la función para eliminar la suscripción
-            try {
-                userDAO.deleteSubscription(loggedInUserName, selectedListId);
-                showInformation("Suscripción Eliminada", "Has sido eliminado de la lista seleccionada.");
-            } catch (SQLException e) {
-                showValidationError("No se pudo eliminar la suscripción. Por favor, inténtelo de nuevo más tarde.");
-            }
+            userDAO.deleteSubscription(loggedInUserName, selectedListId);
+            showInformation("Suscripción Eliminada", "Has sido eliminado de la lista seleccionada.");
         } else {
             showValidationError("Por favor, seleccione una lista para eliminar la suscripción.");
         }
@@ -905,31 +888,26 @@ public class ControllerUserHome {
     @FXML
     private void showCommentsForList(ActionEvent event) {
         tableComment.setVisible(true);
-        try {
-            int id = selectedListId;
+        int id = selectedListId;
 
-            // Obtén todos los comentarios de la tabla comment para la lista seleccionada
-            List<Comment> comments = commentDAO.findCommentsByListId(selectedListId);
+        // Obtén todos los comentarios de la tabla comment para la lista seleccionada
+        List<Comment> comments = commentDAO.findCommentsByListId(selectedListId);
 
-            // Verifica si la lista de comentarios no es nula ni está vacía antes de procesarla
-            if (comments != null && !comments.isEmpty()) {
-                // Convertir la lista en un ObservableList para mostrarla en la tabla
-                ObservableList<Comment> commentsObservable = FXCollections.observableArrayList(comments);
+        // Verifica si la lista de comentarios no es nula ni está vacía antes de procesarla
+        if (comments != null && !comments.isEmpty()) {
+            // Convertir la lista en un ObservableList para mostrarla en la tabla
+            ObservableList<Comment> commentsObservable = FXCollections.observableArrayList(comments);
 
-                // Asignar los comentarios a la tabla y configurar las celdas de la columna
-                tableComment.setItems(commentsObservable);
+            // Asignar los comentarios a la tabla y configurar las celdas de la columna
+            tableComment.setItems(commentsObservable);
 
-                // Configurar las celdas de la columna para mostrar el texto del comentario
-                columnnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-            } else {
-                // La lista de comentarios es nula o está vacía, puedes mostrar un mensaje o manejarlo según tu lógica
-                System.out.println("La lista de comentarios es nula o está vacía");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejar errores de la base de datos
+            // Configurar las celdas de la columna para mostrar el texto del comentario
+            columnnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        } else {
+            // La lista de comentarios es nula o está vacía, puedes mostrar un mensaje o manejarlo según tu lógica
+            System.out.println("La lista de comentarios es nula o está vacía");
         }
+
     }
 
 
