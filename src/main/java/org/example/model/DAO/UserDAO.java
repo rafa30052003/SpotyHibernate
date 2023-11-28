@@ -5,10 +5,7 @@ import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAO implements iDAO<User, String> {
@@ -78,21 +75,20 @@ public class UserDAO implements iDAO<User, String> {
      */
 
     @Override
-    public boolean delete(User user) {
+    public void delete(User user) {
         try {
             manager.getTransaction().begin();
             User mergedUser = manager.merge(user);
             manager.remove(mergedUser);
             manager.getTransaction().commit();
-            return true;
         } catch (Exception e) {
             if (manager.getTransaction().isActive()) {
                 manager.getTransaction().rollback();
             }
             e.printStackTrace();
-            return false;
         }
     }
+
 
     /**
      * funcion para poder modificar el usuario
@@ -100,20 +96,19 @@ public class UserDAO implements iDAO<User, String> {
      * @return true si el usuario se mosifica en la base de datos y un fasle si el usuario no se apodido modificar en la base de datos
      */
     @Override
-    public boolean update(User user) {
+    public void update(User user) {
         try {
             manager.getTransaction().begin();
             manager.merge(user);
             manager.getTransaction().commit();
-            return true;
         } catch (Exception e) {
             if (manager.getTransaction().isActive()) {
                 manager.getTransaction().rollback();
             }
             e.printStackTrace();
-            return false;
         }
     }
+
 
     /**
      *
@@ -178,6 +173,7 @@ public class UserDAO implements iDAO<User, String> {
                 List<List> lists = user.getLists();
                 if (lists != null) {
                     lists.removeIf(list -> list.getId() == idList);
+
                 }
 
                 manager.getTransaction().commit();
