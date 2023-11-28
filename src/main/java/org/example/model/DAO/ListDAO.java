@@ -10,7 +10,10 @@ import java.util.List;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.Album;
 import org.example.model.domain.Song;
+import org.example.model.domain.User;
 import org.example.model.domain.list;
+
+import javax.persistence.*;
 
 public class ListDAO extends list implements iDAO<list, Integer> {
     private final static String FINDALL ="SELECT id, description, name_list, name_user FROM list";
@@ -24,37 +27,26 @@ public class ListDAO extends list implements iDAO<list, Integer> {
 
     private final static String INSERTSonginList ="INSERT INTO song_list (id_list,id_song) VALUES (?,?)";
     private final static String UPDATE ="UPDATE id = ?, , description = ?, , name_list= ?, name_user  = ? WHERE id=?";
-    private final static String DELETE ="DELETE FROM list WHERE id=?";
+    private final static String DELETE ="DELETE FROM list WHERE id= :idList";
     private final static String DELETESongofList ="DELETE FROM song_list  WHERE id_song=? and id_list=?";
-
-    private Connection conn;
-    public ListDAO(Connection conn) {
-        super();
-        this.conn = conn;
-    }
-    public ListDAO() {
-        super();
-        this.conn= Connect.getConnect();
-    }
 
     /**
      * funcion para mostrar las listas de la base de datos
      * @return
      * @throws SQLException
      */
+
+    private EntityManager manager;
+    private static EntityManagerFactory emf;
+    public ListDAO() {
+        // Código de inicialización
+        emf = Persistence.createEntityManagerFactory("aplicacion");
+        manager = emf.createEntityManager();
+    }
     public List<String> findAllNameLists() throws SQLException {
         List<String> nameLists = new ArrayList<>();
-
-        try (PreparedStatement pst = conn.prepareStatement(FINDALL)) {
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    String nameList = rs.getString("name_list");
-                    int id = rs.getInt("id");
-                    nameLists.add(nameList);
-                }
-            }
-        }
-        return nameLists;
+        Query query = manager.createQuery("SELECT u FROM list u", list.class);
+        return query.getResultList();
     }
 
 
@@ -99,34 +91,20 @@ public class ListDAO extends list implements iDAO<list, Integer> {
      * @throws SQLException
      */
     public void delete(int id) throws SQLException {
-        try (PreparedStatement pst = conn.prepareStatement(DELETE)) {
-            pst.setInt(1, id);
-            pst.executeUpdate();
-        }
+
+        manager.getTransaction().begin();
+        String Hola = "hola";
+        Query query = manager.createNativeQuery("DELETE FROM list WHERE id = VALUE (:idList)",List.class);
+        query.setParameter("idList", id);
+        query.executeUpdate();
     }
 
-
-    /**
-     * funcion mara mostrar solo las listas de el usuario
-     * @param loggedInUserName
-     * @return
-     * @throws SQLException
-     */
     public List<String> findAllNameListsByUser(String loggedInUserName) throws SQLException {
-        List<String> nameLists = new ArrayList<>();
 
-        String query = "SELECT name_list FROM list WHERE name_user = ?";
-
-        try (PreparedStatement pst = conn.prepareStatement(query)) {
-            pst.setString(1, loggedInUserName);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    String nameList = rs.getString("name_list");
-                    nameLists.add(nameList);
-                }
-            }
-        }
+        String querys = "SELECT name_list FROM list WHERE name_user = VALUE (:loggedUser)";
+        Query query = manager.createNativeQuery(querys);
+        query.setParameter("loggedUser", loggedInUserName);
+        List<String> nameLists = query.getResultList();
         return nameLists;
     }
 
