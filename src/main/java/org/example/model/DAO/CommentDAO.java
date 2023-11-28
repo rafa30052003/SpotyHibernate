@@ -1,5 +1,6 @@
 package org.example.model.DAO;
 
+import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.Comment;
 import org.example.model.domain.User;
@@ -13,14 +14,13 @@ import java.util.List;
 
 public class CommentDAO implements iDAO<Comment, Object> {
     private static EntityManager manager;
-    private static EntityManagerFactory emf;
 
     // Constructor
     public CommentDAO() {
-        // Código de inicialización
-        emf = Persistence.createEntityManagerFactory("aplicacion");
-        manager = emf.createEntityManager();
+        // Utiliza la conexión existente en lugar de crear una nueva EntityManagerFactory
+        manager = Connection.getConnect().createEntityManager();
     }
+
 
     // Método para mostrar los comentarios de las listas
     public List<Comment> findCommentsByListId(int listId) {
@@ -154,6 +154,9 @@ public class CommentDAO implements iDAO<Comment, Object> {
     @Override
     public boolean insert(User user) {
         return false;
+    }
+    public void close() {
+        Connection.close();
     }
 
 
