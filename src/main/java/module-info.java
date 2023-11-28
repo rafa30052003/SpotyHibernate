@@ -9,7 +9,7 @@ module org.example {
     requires java.persistence;
 
     opens org.example to javafx.fxml;
-    opens org.example.conexion to java.xml.bind; // Corregido el nombre de la carpeta
+    opens org.example.conexion to java.xml.bind;
 
     exports org.example;
     exports org.example.model.domain;

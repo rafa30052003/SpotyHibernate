@@ -1,31 +1,49 @@
 package org.example.model.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
-public class Album {
+@Entity
+@Table(name = "ALBUM")
+public class Album  implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "PHOTO")
     private String photo;
+    @Column(name = "PUBLIC_TIME")
     private Date public_time;
+    @Column(name = "NREPRO")
     private int nrepro;
-    private Artist name_artist;
+    @ManyToMany
+    @JoinTable(
+            name = "ALBUM_ARTIST",
+            joinColumns = @JoinColumn(name = "NAME_ARTIST"),
+            inverseJoinColumns = @JoinColumn(name = "NAME")
+    )
+    private Set<Artist> artists;
 
     public Album() {
     }
 
-    public Album(String name, String photo, Date public_time, int nRepro, Artist name_artist) {
+    public Album(String name, String photo, Date public_time, int nrepro, Set<Artist> artists) {
         this.name = name;
         this.photo = photo;
         this.public_time = public_time;
-        this.nrepro = nRepro;
-        this.name_artist = name_artist;
+        this.nrepro = nrepro;
+        this.artists = artists;
     }
 
-    public Album(String photo, Date public_time, int nRepro, Artist name_artist) {
+    public Album(String photo, Date public_time, int nrepro, Set<Artist> artists) {
         this.photo = photo;
         this.public_time = public_time;
-        this.nrepro = nRepro;
-        this.name_artist = name_artist;
+        this.nrepro = nrepro;
+        this.artists = artists;
     }
 
     public String getName() {
@@ -60,25 +78,25 @@ public class Album {
         this.nrepro = nrepro;
     }
 
-    public Artist getName_artist() {
-        return name_artist;
+    public Set<Artist> getArtists() {
+        return artists;
     }
 
-    public void setName_artist(Artist name_artist) {
-        this.name_artist = name_artist;
+    public void setArtists(Set<Artist> artists) {
+        this.artists = artists;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Album)) return false;
-        Album disc = (Album) o;
-        return Objects.equals(name, disc.name);
+        if (o == null || getClass() != o.getClass()) return false;
+        Album album = (Album) o;
+        return nrepro == album.nrepro && Objects.equals(name, album.name) && Objects.equals(photo, album.photo) && Objects.equals(public_time, album.public_time) && Objects.equals(artists, album.artists);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, photo, public_time, nrepro, artists);
     }
 
     @Override
@@ -87,8 +105,8 @@ public class Album {
                 "name='" + name + '\'' +
                 ", photo='" + photo + '\'' +
                 ", public_time=" + public_time +
-                ", nRepro=" + nrepro +
-                ", name_artist=" + name_artist +
+                ", nrepro=" + nrepro +
+                ", artists=" + artists +
                 '}';
     }
 }
