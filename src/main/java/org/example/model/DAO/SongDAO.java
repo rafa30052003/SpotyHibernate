@@ -7,6 +7,8 @@ import org.example.model.domain.Album;
 import org.example.model.domain.Song;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,33 +26,15 @@ public class SongDAO extends Song implements iDAO<Song, Integer> {
 
     @Override
     public List<Song> findAll() throws SQLException {
-        List<Song> result = new ArrayList<>();
-        try (PreparedStatement pst = this.conn.prepareStatement(FINDALL)) {
-            try (ResultSet res = pst.executeQuery()) {
-                while (res.next()) {
-                    Song s = new Song();
-                    s.setId(res.getInt("id"));
-                    s.setName_song(res.getString("name_song"));
-                    s.setGender(res.getString("gender"));
-                    s.setNrepro(res.getInt("N_reproduction"));  // Corregido el nombre de la columna
-                    s.setDuration(res.getString("duration"));
-                    s.setArchive_song(res.getString("archive_song"));
-                    String nameDisk = res.getString("name_disk");
-                    AlbumDAO adao = new AlbumDAO(this.conn);
-
-                    Album a = adao.findById(nameDisk); // Asumiendo que existe un método "findByName" en tu clase AlbumDAO.
-
-                  
-
-                    s.setAlbum(a);
-
-                    result.add(s);
-                }
-            }
-        } catch (SQLException e) {
+        List<Song> songs=new ArrayList<>();
+        try{
+            Query q=manager.createNativeQuery("SELECT a FROM Song a",Song.class);
+            songs=q.getResultList();
+        }catch (Exception e ){
             e.printStackTrace();
         }
-        return result;
+        return songs;
+
     }
 
     /**
@@ -153,20 +137,23 @@ public class SongDAO extends Song implements iDAO<Song, Integer> {
     }
 
 
+    public void updateReproductionCount(Song song) {
+        try {
+            EntityTransaction transaction = manager.getTransaction();
+            transaction.begin();
 
-
-
-
-
-
-    public void updateReproductionCount(Song song) throws SQLException {
-        if (song != null) {
-            String updateQuery = "UPDATE song SET N_reproduction = ? WHERE id = ?";
-            try (PreparedStatement pst = this.conn.prepareStatement(updateQuery)) {
-                pst.setInt(1, song.getNrepro());
-                pst.setInt(2, song.getId());
-                pst.executeUpdate();
+            Song songToUpdate = manager.find(Song.class, song.getId());
+            if (songToUpdate != null) {
+                songToUpdate.setNrepro(song.getNrepro());
+               manager.merge(songToUpdate);
             }
+
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
+
+
+
