@@ -1,4 +1,5 @@
 package org.example.model.DAO;
+
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.Album;
 import org.example.model.domain.Artist;

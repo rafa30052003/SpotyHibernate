@@ -1,217 +1,225 @@
 package org.example.model.DAO;
 
-import org.example.conexion.Connect;
+import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDAO implements iDAO<User,String> {
-    private final static String FINDBYNAME_USER = "SELECT name,mail,photo,password from user WHERE name=?";
-    private final static String FINDBYNAME_ADMIN= "SELECT name from admin WHERE name=?";
-    private final static String FINDBYNAME_pass_USER = "SELECT name,password from user WHERE name=? AND password=?";
-    private final static String INSERT = "INSERT INTO User (name,mail,photo,password) VALUES (?,?,?,?)";
-    private final static String UPDATE = "UPDATE User SET Name=?, mail=?, photo=?, password=? where name=?";
-    private final static String DELETE = "DELETE FROM User WHERE Name = ?";
-    private final static String addsub = "Insert Into subscription(id_list,name_user)values(?,?)";
-    private final static String deletesub = "DELETE FROM subscription WHERE name_user= ? and id_list=?";
+public class UserDAO implements iDAO<User, String> {
+    private final static String FIND_USER_BY_NAME = "SELECT u FROM User u WHERE u.name = :name";
+    private final static String FIND_USER_BY_NAME_AND_PASSWORD = "SELECT u FROM User u WHERE u.name = :name AND u.password = :password";
 
-    private Connection conn;
+    private final static String FINDBYNAME_ADMIN = "SELECT a.name FROM Admin a WHERE a.name = :name";
+    private final static String INSERT_SUBSCRIPTION = "INSERT INTO Subscription(name_user, id_list) VALUES (:nameUser, :idList)";
+    //private final static String deletesub = "DELETE FROM Subscription s WHERE s.nameUser = :nameUser AND s.idList = :idList";
 
-    public UserDAO()  {
-        conn = Connect.getConnect();
-        if (conn == null) {
-            throw new RuntimeException("Unable to establish connection to the database.");
-        }
-    }
-    @Override
-    public List<User> findAll() throws SQLException {
-        return null;
-    }
+    private static EntityManager manager;
 
-    @Override
-    public User findById(String id) throws SQLException {
-        return null;
+    // Constructor
+    public UserDAO() {
+        // Utiliza la conexión existente en lugar de crear una nueva EntityManagerFactory
+        manager = Connection.getConnect().createEntityManager();
     }
 
     /**
-     * Funcion para guardar el usuario en la base de datos
-     * @param entity
-     * @return devuelve el usuario para saber si se creado
-     * @throws SQLException
+     * estas funcion muestre muestra todos los usuarios de la base de datos
+     * @return la lista de usuarios
+     */
+    @Override
+    public List<User> findAll() {
+        Query query = manager.createQuery("SELECT u FROM User u", User.class);
+        return query.getResultList();
+    }
+
+    /**
+     * funcion para buscar todos los usuarios por el nombre
+     * @param name es el nombre de el usuairio
+     * @return el suaurio que salga en la busqueda
      */
 
     @Override
-    public User save(User entity) throws SQLException {
-        if (entity != null) {
-            // Verificar si el usuario ya existe en la base de datos
-            User existingUser = findByName(entity.getName(), FINDBYNAME_USER);
-            if (existingUser != null) {
-                // Si el usuario ya existe, actualiza los datos
-                try (PreparedStatement pst = this.conn.prepareStatement(UPDATE)) {
-                    pst.setString(1, entity.getMail());
-                    pst.setString(2, entity.getPhoto());
-                    pst.setString(3, entity.getPassword());
-                    pst.setString(4, entity.getName()); // Nombre para la cláusula WHERE
-                    pst.executeUpdate();
-                }
-            } else {
-                // Si el usuario no existe, inserta un nuevo usuario
-                try (PreparedStatement pst = this.conn.prepareStatement(INSERT)) {
-                    pst.setString(1, entity.getName());
-                    pst.setString(2, entity.getMail());
-                    pst.setString(3, entity.getPhoto());
-                    pst.setString(4, entity.getPassword());
-                    pst.executeUpdate();
-                }
-            }
-        }
-        return entity;
+    public User findById(String name) {
+        return findUserByName(name);
     }
 
-
     /**
-     * Funcion para modificar usuarios en la base de datos
-     * @param entity
-     * @return devuelve el suario modificado
-     * @throws SQLException
+     * funcion para insertar el usuario en la base de datos
+     * @param user
+     * @return true si el usuario se a insertado en labase de datos y un false si no se ha creado
      */
 
 
-    public User update(User entity) throws SQLException {
-        if (entity != null) {
-            try (PreparedStatement pst = this.conn.prepareStatement(UPDATE)) {
-                pst.setString(1, entity.getName());
-                pst.setString(2,entity.getMail());
-                pst.setString(3,entity.getPhoto());
-                pst.setString(4,entity.getPassword());
-
-                pst.executeUpdate();
+    @Override
+    public boolean insert(User user) {
+        try {
+            manager.getTransaction().begin();
+            manager.persist(user);
+            manager.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
             }
+            e.printStackTrace();
+            return false;
         }
-        return entity;
-    }
-//funcion  para el nombre de el usuario
-    public User findByNameUser(String name) throws SQLException {
-        return findByNameAndPass(name,  FINDBYNAME_USER, FINDBYNAME_pass_USER);
-    }
-    public User findByNameAndPassUser(String name, String password) throws SQLException {
-        return findByNameAndPass(name, password, FINDBYNAME_pass_USER);
     }
 
     /**
-     * funcion para buscar el nombre de el usuario y la contraseña
-     * @param name
-     * @param query
-     * @param FINDBYNAME_pass_USER
+     * funcion para eliminar el usuario de la base de datos
+     * @param user
+     * @return true si el usuario se elimina en la base de datos y un false si el usuario no se ha podido eliminar
+     */
+
+    @Override
+    public boolean delete(User user) {
+        try {
+            manager.getTransaction().begin();
+            User mergedUser = manager.merge(user);
+            manager.remove(mergedUser);
+            manager.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * funcion para poder modificar el usuario
+     * @param user
+     * @return true si el usuario se mosifica en la base de datos y un fasle si el usuario no se apodido modificar en la base de datos
+     */
+    @Override
+    public boolean update(User user) {
+        try {
+            manager.getTransaction().begin();
+            manager.merge(user);
+            manager.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param entity
      * @return
-     * @throws SQLException
-     */
-    private User findByNameAndPass(String name, String query, String FINDBYNAME_pass_USER) throws SQLException {
-        try (PreparedStatement pst = this.conn.prepareStatement(query)) {
-            pst.setString(1, name);
-            ResultSet resultSet = pst.executeQuery();
-            if (resultSet.next()) {
-                return createUserFromResultSet(resultSet);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * busca el nombre de el usuario
-     * @param name
-     * @param query
-     * @return
-     * @throws SQLException
-     */
-    private User findByName(String name, String query) throws SQLException {
-        try (PreparedStatement pst = this.conn.prepareStatement(query)) {
-            pst.setString(1, name);
-            ResultSet resultSet = pst.executeQuery();
-            if (resultSet.next()) {
-                return createUserFromResultSet(resultSet);
-            }
-        }
-        return null;
-    }
-
-    private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        user.setName(resultSet.getString("name"));
-        user.setMail(resultSet.getString("mail"));
-        user.setPhoto(resultSet.getString("photo"));
-        user.setPassword(resultSet.getString("password"));
-        return user;
-    }
-
-    /**
-     * funcion para borra el usuario
-     * @param entity
-     * @throws SQLException
      */
     @Override
-    public void delete(User entity) throws SQLException {
-        if (entity != null) {
-            try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {
-                pst.setString(1, entity.getName());
-                pst.executeUpdate();
+    public User save(User entity) {
+        try {
+            manager.getTransaction().begin();
+            manager.persist(entity);
+            manager.getTransaction().commit();
+            return entity;
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
             }
+            e.printStackTrace();
+            return null;
         }
-
     }
 
-
+    public User findUserByName(String name) {
+        Query query = manager.createQuery(FIND_USER_BY_NAME, User.class);
+        query.setParameter("name", name);
+        return (User) query.getSingleResult();
+    }
     /**
      * funcion para hacer la subcrippcion de el usuario
      * @param idList
-     * @param userName
-     * @throws SQLException
-     */
 
-    public void addSubscription(int idList, String userName) throws SQLException {
-        try (PreparedStatement pst = this.conn.prepareStatement(addsub)) {
-            pst.setInt(1, idList);
-            pst.setString(2, userName);
-            pst.executeUpdate();
+     */
+    public void addSubscription(String nameUser, int idList) {
+        try {
+            manager.getTransaction().begin();
+
+            Query query = manager.createNativeQuery(INSERT_SUBSCRIPTION);
+            query.setParameter("nameUser", nameUser);
+            query.setParameter("idList", idList);
+            query.executeUpdate();
+
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
         }
     }
-
     /**
      * funcion para borrar la subcripcion para la lista
      * @param nameUser
      * @param idList
-     * @throws SQLException
-     */
-    public void deleteSubscription(String nameUser, int idList) throws SQLException {
 
-        try (PreparedStatement pst = this.conn.prepareStatement(deletesub)) {
-            pst.setString(1, nameUser);
-            pst.setInt(2, idList);
-            pst.executeUpdate();
+     */
+    public void deleteSubscription(String nameUser, int idList) {
+        try {
+            manager.getTransaction().begin();
+
+            User user = manager.find(User.class, nameUser);
+            if (user != null) {
+                List<List> lists = user.getLists();
+                if (lists != null) {
+                    lists.removeIf(list -> list.getId() == idList);
+                }
+
+                manager.getTransaction().commit();
+                System.out.println("Suscripción eliminada correctamente");
+            } else {
+                // Si no se encuentra el usuario, hacer rollback
+                if (manager.getTransaction().isActive()) {
+                    manager.getTransaction().rollback();
+                }
+                System.out.println("No se encontró el usuario para eliminar la suscripción");
+            }
+        } catch (Exception e) {
+            // Manejar la excepción y hacer rollback si es necesario
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            System.out.println("Error al eliminar la suscripción");
         }
     }
+    public User findUserByNameAndPassword(String name, String password) {
+        Query query = manager.createQuery(FIND_USER_BY_NAME_AND_PASSWORD, User.class);
+        query.setParameter("name", name);
+        query.setParameter("password", password);
+        return (User) query.getSingleResult();
+    }
+
+
 
     /**
      * funcion para validar si el usuario es admin o no
      * @param name
      * @return true si el usuario es admin si no lo es devuelve un false
-     * @throws SQLException
+
      */
-    public boolean isAdmin(String name) throws SQLException {
-        // Consulta para buscar un usuario en la tabla admin
 
-
-        try (PreparedStatement pst = this.conn.prepareStatement(FINDBYNAME_ADMIN)) {
-            pst.setString(1, name);
-            ResultSet resultSet = pst.executeQuery();
-
-            // Si resultSet tiene al menos una fila, significa que el usuario existe en la tabla admin
-            return resultSet.next();
-        }
+    public boolean isAdmin(String name) {
+        Query query = manager.createQuery(FINDBYNAME_ADMIN, User.class);
+        query.setParameter("name", name);
+        return !query.getResultList().isEmpty();
+    }
+    public void close() {
+        Connection.close();
     }
 }

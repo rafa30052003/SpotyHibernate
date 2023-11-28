@@ -1,11 +1,12 @@
 package org.example.model.DAO;
 
-import org.example.conexion.Connect;
+import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.Artist;
 import org.example.model.domain.Nationality;
 
-import java.sql.Connection;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,152 +15,186 @@ import java.util.List;
 
 public class ArtistDAO extends Artist implements iDAO<Artist,String> {
 
-    /*
-     * QUERY
+
+   private static EntityManager manager;
+
+
+    /**
+     * Metodo que muestra todos los Artistas de la base de datos
+     * @return: todos los artistas
      */
-    private final static String FINDALL = "SELECT name, nationality, photo from artist";
-    private final static String FINBYID = "SELECT name, nationality, photo  from artist WHERE name =?";
-    private final static String INSERT = "INSERT INTO artist (name, nationality, photo) VALUES (?,?,?)";
-    private final static String UPDATE = "UPDATE artist SET  nationality=?, photo=? WHERE name=?";
-    private final static String DELETE = "DELETE FROM artist WHERE name=?";
-    private final static String FINDBYNATIONALITY = "SELECT name, nationality, photo FROM artist WHERE nationality = ?";
-    private final static String FIND_NAMES = "SELECT name FROM artist";
-
-    private Connection conn;
-
-    public ArtistDAO(String name, Nationality nacionality, String photo, Connection conn) {
-        super(name, nacionality, photo);
-        this.conn = conn;
-    }
-
-    public ArtistDAO(Nationality nacionality, String photo, Connection conn) {
-        super(nacionality, photo);
-        this.conn = conn;
-    }
-
-    public ArtistDAO() {
-        this.conn = Connect.getConnect();
-    }
-
-
-
-
-
     @Override
-    public List<Artist> findAll() throws SQLException {
-        List<Artist> result = new ArrayList<>();
-        try (PreparedStatement pst = this.conn.prepareStatement(FINDALL)) {
-            try (ResultSet res = pst.executeQuery()) {
-                while (res.next()) {
-                    Artist a = new Artist();
-                    a.setName(res.getString("name"));
-                    String nacionalityStr = res.getString("nationality");
-                    Nationality nationality = convertToNationality(nacionalityStr);
-                    a.setNationality(nationality);
-                    a.setPhoto(res.getString("photo"));
+    public List<Artist> findAll() {
+        List<Artist> result = null;
 
-                    result.add(a);
-                }
-            }
-        } catch (SQLException e) {
+        try {
+            manager = Connection.getConnect().createEntityManager();
+
+            TypedQuery<Artist> query = manager.createQuery("SELECT a FROM Artist a", Artist.class);
+            result = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            manager.close();
         }
+
         return result;
     }
 
+    /**
+     * Metodo que busca el artista por su id
+     * @param id: tipo String , id del Arista
+     * @return : el artista en concreto
+     * @throws SQLException
+     */
     @Override
     public Artist findById(String id) throws SQLException {
         Artist result = null;
-        try (PreparedStatement pst = this.conn.prepareStatement(FINBYID)) {
-            pst.setString(1, id);
-            try (ResultSet res = pst.executeQuery()) {
-                if (res.next()) {
-                    result = new Artist();
-                    result.setName(res.getString("name"));
-                    result.setNationality(Nationality.valueOf(res.getString("nationality")));
 
+        try {
+            manager = Connection.getConnect().createEntityManager();
 
-                }
-            }
-        }
-        return result;
-    }
+            TypedQuery<Artist> query = manager.createQuery("SELECT a FROM Artist a WHERE a.name = :name", Artist.class);
+            query.setParameter("name", id);
 
-    @Override
-    public Artist save(Artist entity) throws SQLException {
-        Artist result = new Artist();
-        if (entity != null) {
-            Artist a = findById(entity.getName());
+            result = query.getSingleResult();
 
-            if (a == null) {
-                // INSERT
-                try (PreparedStatement pst = this.conn.prepareStatement(INSERT)) {
-                    pst.setString(1, entity.getName());
-                    pst.setString(2, entity.getNationality().name());
-                    pst.setString(3, entity.getPhoto());
-
-                    pst.executeUpdate();
-                }
-
-            } else {
-                // UPDATE
-                try (PreparedStatement pst = this.conn.prepareStatement(UPDATE)) {
-                    pst.setString(3, entity.getName());
-                    pst.setString(1, entity.getNationality().name());
-                    pst.setString(2, entity.getPhoto());
-
-                    pst.executeUpdate();
-                }
-            }
-            result = entity;
-        }
-        return result;
-    }
-
-    @Override
-    public void delete(Artist entity) throws SQLException {
-        try (PreparedStatement pst = this.conn.prepareStatement(DELETE)) {
-            pst.setString(1, entity.getName());
-            pst.executeUpdate();
-        }
-    }
-
-    public List<String> findNames () throws SQLException {
-        List<String> names = new ArrayList<>();
-        try (PreparedStatement pst = this.conn.prepareStatement(FIND_NAMES)) {
-            try (ResultSet res = pst.executeQuery()) {
-                while (res.next()) {
-                    String name = res.getString("name");
-                    names.add(name);
-                }
-            }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            manager.close();
         }
+
+        return result;
+    }
+
+    /**
+     * Metodo que inserta un artista, else (el artista si esta creado lo modifica)
+     * @param entity: El artista a crear o modificar
+     * @return el artista
+     */
+    @Override
+    public Artist save(Artist entity) {
+        Artist result = null;
+
+        if (entity != null) {
+            manager = Connection.getConnect().createEntityManager();
+
+            try {
+                manager.getTransaction().begin();
+
+                if (!manager.contains(entity)) {
+                    // INSERT
+                    manager.persist(entity);
+                } else {
+                    // UPDATE
+                    entity = manager.merge(entity);
+                }
+
+                manager.getTransaction().commit();
+                result = entity;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                if (manager.getTransaction().isActive()) {
+                    manager.getTransaction().rollback();
+                }
+            } finally {
+                manager.close();
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Metodo que elimina el artista
+     * @param entity: el artista a eliminar
+     */
+    @Override
+    public void delete(Artist entity) {
+        try {
+            manager = Connection.getConnect().createEntityManager();
+
+            manager.getTransaction().begin();
+            entity = manager.merge(entity); // Si no está en el contexto de persistencia, attach la entidad
+            manager.remove(entity);
+            manager.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+        } finally {
+            manager.close();
+        }
+    }
+
+    /**
+     * Metodo que busca los nombres de un artista
+     * Este metoso esta hecho en especifico para mostrar los nombres de los artistas en un comboBox
+     * @return todos los nombres de los artistas
+     */
+    public List<String> findNames() {
+        List<String> names = null;
+
+        try {
+            manager = Connection.getConnect().createEntityManager();
+
+            TypedQuery<String> query = manager.createQuery(
+                    "SELECT a.name FROM Artist a",
+                    String.class
+            );
+
+            names = query.getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            manager.close();
+        }
+
         return names;
     }
 
+    /**
+     * Metodo que filtra los artistas por nacionalidad
+     * @param nationality un enun que es un atributo del artista
+     * @return los artistas depemdiendo de la nacionalidad a buscar
+     */
+    public List<Artist> findByNationality(Nationality nationality) {
+        List<Artist> result = null;
 
-    public List<Artist> findByNationality (Nationality nationality) throws SQLException {
-        List<Artist> result = new ArrayList<>();
-        try (PreparedStatement pst = this.conn.prepareStatement(FINDBYNATIONALITY)) {
-            pst.setString(1, nationality.name()); // Convierte el enum a una cadena para usarlo en la consulta
-            try (ResultSet res = pst.executeQuery()) {
-                while (res.next()) {
-                    Artist artist = new Artist();
-                    artist.setName(res.getString("name"));
-                    artist.setNationality(nationality); // Establece la nacionalidad directamente desde el parámetro
-                    artist.setPhoto(res.getString("photo"));
-                    result.add(artist);
-                }
-            }
-        } catch (SQLException e) {
+        try {
+            manager = Connection.getConnect().createEntityManager();
+
+            TypedQuery<Artist> query = manager.createQuery(
+                    "SELECT a FROM Artist a WHERE a.nationality = :nationality",
+                    Artist.class
+            );
+
+            query.setParameter("nationality", nationality);
+
+            result = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            manager.close();
         }
+
         return result;
     }
 
-
+    /**
+     * metodo que convierte la nacionalidad a string
+     * @param nationalityStr
+     * @return : la nacionalidad convertida
+     */
     private Nationality convertToNationality(String nationalityStr){
         try {
             return Nationality.valueOf(nationalityStr);

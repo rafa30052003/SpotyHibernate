@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.example.App;
-import org.example.conexion.Connect;
 import org.example.model.DAO.AlbumDAO;
 import org.example.model.DAO.ArtistDAO;
 import org.example.model.domain.Album;
