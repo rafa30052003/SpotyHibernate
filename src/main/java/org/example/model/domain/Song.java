@@ -2,12 +2,14 @@ package org.example.model.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
 @Entity
 @Table(name = "SONG")
 public class Song implements Serializable {
     private static final long serialVersionUID=1L;
     @Id
+    @GeneratedValue
     @Column(name = "ID")
     private int id;
     @Column(name = "NAME_SONG")
@@ -24,6 +26,17 @@ public class Song implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NAME_ALBUM")
     private Album album;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "song_list",
+            joinColumns = {
+                    @JoinColumn(name = "id_list", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "id_song",referencedColumnName = "id")
+            }
+    )
+    private Set<list> lists;
 
 
     public Song(int id, String name_song, String gender, int nrepro, String duration, Album album, String archive_song) {
