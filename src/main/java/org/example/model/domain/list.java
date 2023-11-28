@@ -8,7 +8,7 @@ import java.util.Set;
 public class list {
     @Id
     @GeneratedValue
-    @Column(name = "ID")
+    @Column(name = "id")
     private int id;
     @Column(name = "DESCRIPTION")
     private String description;
