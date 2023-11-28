@@ -47,7 +47,7 @@ public class ControllerLogin {
         UserDAO userDAO = new UserDAO();
 
         // Busca al usuario en la tabla user
-        User user = userDAO.findByNameUser(username);
+        User user = userDAO.findUserByNameAndPassword(username, password);
 
         if (user != null && BCrypt.checkpw(password, user.getPassword()) && userDAO.isAdmin(username)) {
             // La contraseña coincide, guarda los campos del usuario logueado en las variables
