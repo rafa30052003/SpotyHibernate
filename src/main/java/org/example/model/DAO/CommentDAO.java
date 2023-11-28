@@ -6,9 +6,7 @@ import org.example.model.domain.Comment;
 import org.example.model.domain.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class CommentDAO implements iDAO<Comment, Object> {
         // Utilizar EntityManager para consultar entidades
         try {
             // Utiliza el nombre correcto de la clase de entidad en tu consulta
-            String jpql = "SELECT c FROM Comment c WHERE c.id_list = :listId";
+            String jpql = "SELECT c FROM Comment c WHERE c.id= :listId";
             List<Comment> resultList = manager.createQuery(jpql, Comment.class)
                     .setParameter("listId", listId)
                     .getResultList();
@@ -90,7 +88,7 @@ public class CommentDAO implements iDAO<Comment, Object> {
      * @return Si el comentario ha sido borrado
      */
 
-    public boolean delete(Comment c) {
+    public void delete(Comment c) {
         EntityTransaction transaction = null;
 
         try {
@@ -108,16 +106,15 @@ public class CommentDAO implements iDAO<Comment, Object> {
 
             // Commit de la transacción
             transaction.commit();
-            return true;
         } catch (Exception e) {
             // Manejar la excepción y hacer rollback si es necesario
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             e.printStackTrace(); // Maneja las excepciones adecuadamente en tu aplicación
-            return false;
         }
     }
+
 
     @Override
     public List<Comment> findAll() {
@@ -141,7 +138,7 @@ public class CommentDAO implements iDAO<Comment, Object> {
     }
 
     @Override
-    public boolean update(User user) {
+    public void update(User user) {
         return false;
     }
 

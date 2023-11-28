@@ -17,7 +17,7 @@ public class Comment implements Serializable {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "name")  // Corregir aquí
     private User user;
 
     @ManyToOne
@@ -30,12 +30,18 @@ public class Comment implements Serializable {
     public Comment() {
     }
 
+
     public Comment(User user, List myList, String comment) {
         this.user = user;
-        this.myList = myList;
+        this.myList = (list) myList;
         this.comment = comment;
     }
 
+    public Comment(String nameUser, int selectedListId, String comment) {
+        this.user = new User(nameUser);  // Supongo que el constructor de User acepta el nombre como parámetro
+        this.myList = new list(selectedListId, null, null, null);  // Supongo que el constructor de list acepta los parámetros necesarios
+        this.comment = comment;
+    }
     public int getId() {
         return id;
     }
