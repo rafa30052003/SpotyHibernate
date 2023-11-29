@@ -138,7 +138,7 @@ public class CommentDAO implements iDAO<Comment, Object> {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
         return false;
     }
 
@@ -152,6 +152,8 @@ public class CommentDAO implements iDAO<Comment, Object> {
     public boolean insert(User user) {
         return false;
     }
+
+
     public void close() {
         Connection.close();
     }
