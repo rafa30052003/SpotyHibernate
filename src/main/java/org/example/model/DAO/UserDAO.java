@@ -3,6 +3,7 @@ package org.example.model.DAO;
 import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.User;
+import org.example.model.domain.list;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -92,11 +93,12 @@ public class UserDAO implements iDAO<User, String> {
 
     /**
      * funcion para poder modificar el usuario
+     *
      * @param user
      * @return true si el usuario se mosifica en la base de datos y un fasle si el usuario no se apodido modificar en la base de datos
      */
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
         try {
             manager.getTransaction().begin();
             manager.merge(user);
@@ -107,6 +109,7 @@ public class UserDAO implements iDAO<User, String> {
             }
             e.printStackTrace();
         }
+        return false;
     }
 
 
@@ -170,7 +173,7 @@ public class UserDAO implements iDAO<User, String> {
 
             User user = manager.find(User.class, nameUser);
             if (user != null) {
-                List<List> lists = user.getLists();
+                List<list> lists = user.getLists();
                 if (lists != null) {
                     lists.removeIf(list -> list.getId() == idList);
 
