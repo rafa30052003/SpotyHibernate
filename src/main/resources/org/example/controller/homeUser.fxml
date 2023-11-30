@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="834.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerUserHome">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="834.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerUserHome">
 
     <right>
-        <VBox prefHeight="463.0" prefWidth="194.0" style="-fx-background-color: #020113; -fx-border-color: #22ff00;" BorderPane.alignment="CENTER">
+        <VBox prefHeight="463.0" prefWidth="194.0" style="-fx-background-color: #020113; -fx-border-color: #6a9ce4;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="buttonSong" mnemonicParsing="false" onAction="#buttonShowAllSongs" prefHeight="50.0" prefWidth="206.0" style="-fx-background-color: #020113;" text="Ver todas las canciones" textFill="WHITE">
+                <Button fx:id="buttonSong" mnemonicParsing="false" onAction="#buttonShowAllSongs" prefHeight="50.0" prefWidth="206.0" style="-fx-background-color: #020113; -fx-border-width: 0px 0px 0px 0px;" text="Ver todas las canciones" textFill="WHITE">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
@@ -50,7 +37,7 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                     </font>
                 </Button>
-                <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: #020113;" text="ver listas " textFill="WHITE">
+                <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: #020113;" text="Ver listas " textFill="WHITE">
                     <items>
                         <MenuItem fx:id="mylist" mnemonicParsing="false" onAction="#buttonShowMyList" text="mis listas " />
                         <MenuItem fx:id="listSubcrip" mnemonicParsing="false" onAction="#buttonShowMyListSub" text="listas Subscritas" />
@@ -64,9 +51,9 @@
         </VBox>
     </right>
     <top>
-        <Pane prefHeight="200.0" prefWidth="1079.0" style="-fx-background-color: #060256; -fx-border-color: #22ff00 #22ff00;" BorderPane.alignment="CENTER">
+        <Pane prefHeight="200.0" prefWidth="1079.0" style="-fx-background-color: #6a9ce4; -fx-border-color: #6a9ce4;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="201.0" fitWidth="1170.0" layoutX="-14.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="false" style="-fx-border-color: #22ff00;">
+                <ImageView fitHeight="201.0" fitWidth="1170.0" layoutX="-14.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="false" style="-fx-border-color: #6a9ce4;">
                     <image>
                         <Image url="@../../../foto/fondocolor.png" />
                     </image>
@@ -94,11 +81,11 @@
                         <Font name="Arial Rounded MT Bold" size="33.0" />
                     </font>
                 </Label>
-                <Pane layoutX="201.0" layoutY="151.0" prefHeight="49.0" prefWidth="766.0" style="-fx-border-color: #22ff00;">
+                <Pane layoutX="201.0" layoutY="151.0" prefHeight="49.0" prefWidth="766.0" style="-fx-border-color: #6a9ce4; -fx-border-width: 0px 0px 0px 0px;">
                     <children>
                         <Label layoutX="452.0" layoutY="12.0" prefHeight="26.0" prefWidth="132.0" text="Buscador:" textFill="WHITE">
                             <font>
-                                <Font name="Arial Rounded MT Bold" size="21.0" />
+                                <Font name="Roboto Light" size="21.0" />
                             </font>
                         </Label>
                         <TextField layoutX="584.0" layoutY="12.0" />
@@ -113,7 +100,7 @@
         </Pane>
     </top>
     <bottom>
-        <Pane prefHeight="171.0" prefWidth="1157.0" style="-fx-background-color: #020a1f; -fx-border-color: #22ff00;" BorderPane.alignment="CENTER">
+        <Pane prefHeight="171.0" prefWidth="1157.0" style="-fx-background-color: #020a1f; -fx-border-color: #6a9ce4;" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="154.0" fitWidth="216.0" layoutX="56.0" layoutY="9.0" pickOnBounds="true" preserveRatio="false">
                     <image>
@@ -131,11 +118,11 @@
                     </font>
                 </Label>
                 <Slider layoutX="362.0" layoutY="98.0" prefHeight="14.0" prefWidth="457.0" />
-                <Label fx:id="labelDurecion" layoutX="825.0" layoutY="94.0" prefHeight="23.0" prefWidth="46.0" text="Crono" textFill="#22ff00" />
+                <Label fx:id="labelDurecion" layoutX="825.0" layoutY="94.0" prefHeight="23.0" prefWidth="46.0" text="Crono" textFill="#6a9ce4" />
                 <Button fx:id="stopButton" layoutX="616.0" layoutY="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="36.0" text="||" />
                 <Button layoutX="556.0" layoutY="53.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="35.0" text="&lt;&lt;" />
                 <Button layoutX="683.0" layoutY="54.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="36.0" text="&gt;&gt;" />
-                <Button fx:id="buttonexit" layoutX="976.0" layoutY="83.0" mnemonicParsing="false" onAction="#buttonExit" prefHeight="44.0" prefWidth="94.0" style="-fx-background-color: #020a1f;" text="volver  " textFill="WHITE">
+                <Button fx:id="buttonexit" layoutX="976.0" layoutY="83.0" mnemonicParsing="false" onAction="#buttonExit" prefHeight="44.0" prefWidth="94.0" style="-fx-background-color: #020a1f;" text="Volver  " textFill="WHITE">
                     <font>
                         <Font size="20.0" />
                     </font></Button>
@@ -145,9 +132,9 @@
     <left>
         <Pane prefHeight="463.0" prefWidth="217.0" style="-fx-background-color: #020113;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutY="-2.0" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #020113; -fx-border-color: #22ff00;" styleClass="bo" text="Listas de Reproducción" textFill="#22ff00">
+                <Label layoutY="-2.0" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #020113; -fx-border-color: #4282a6; -fx-border-width: 0px 0px 0px 0px;" styleClass="bo" text="Listas de Reproducción" textFill="#fcfcfc">
                     <font>
-                        <Font size="18.0" />
+                        <Font name="Roboto Light" size="18.0" />
                     </font>
                 </Label>
                 <ListView fx:id="listMyList" layoutX="1.0" layoutY="30.0" onMouseClicked="#handleListSelection" onMouseExited="#handleSongSelection" prefHeight="343.0" prefWidth="196.0" style="-fx-background-color: #020a1f;" />
@@ -199,41 +186,41 @@
                         <TableColumn fx:id="columnnComment" prefWidth="760.0000151634216" style="-fx-background-color: #020a1f; -fx-text-fill: white;" text="comentario" />
                     </columns>
                 </TableView>
-                <Button fx:id="buttonAlbunSong" layoutX="95.0" layoutY="406.0" mnemonicParsing="false" onAction="#showAlbumSongs" prefHeight="50.0" prefWidth="217.0" style="-fx-background-color: #020113;" text="ver canciones de el albums" textFill="WHITE">
+                <Button fx:id="buttonAlbunSong" layoutX="95.0" layoutY="406.0" mnemonicParsing="false" onAction="#showAlbumSongs" prefHeight="50.0" prefWidth="217.0" style="-fx-background-color: #020113;" text="Ver canciones de el albums" textFill="WHITE">
                     <font>
-                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                        <Font name="Roboto Light" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="buttonAlbun" layoutX="558.0" layoutY="406.0" mnemonicParsing="false" onAction="#activeTablaAlbun" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #020113;" text="ver albums" textFill="WHITE">
+                <Button fx:id="buttonAlbun" layoutX="558.0" layoutY="406.0" mnemonicParsing="false" onAction="#activeTablaAlbun" prefHeight="50.0" prefWidth="124.0" style="-fx-background-color: #020113;" text="Ver albums" textFill="WHITE">
                     <font>
-                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                        <Font name="Roboto Light" size="14.0" />
                     </font>
                 </Button>
                 <AnchorPane fx:id="panelModify" layoutX="11.0" prefHeight="400.0" prefWidth="722.0">
                     <children>
-                        <ImageView fx:id="imgUser1" fitHeight="401.0" fitWidth="762.0" layoutX="-23.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="false" style="-fx-border-color: #22ff00;">
+                        <ImageView fx:id="imgUser1" fitHeight="401.0" fitWidth="762.0" layoutX="-23.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="false" style="-fx-border-color: #22ff00; -fx-border-width: 0px 0px 0px 0px;">
                             <image>
                                 <Image url="@../../../foto/fondouser.png" />
                             </image>
                         </ImageView>
-                        <Label layoutX="354.0" layoutY="82.0" prefHeight="32.0" prefWidth="119.0" text="Nombre:" textFill="WHITE">
+                        <Label layoutX="370.0" layoutY="82.0" prefHeight="32.0" prefWidth="119.0" text="Nombre:" textFill="WHITE">
                             <font>
-                                <Font name="Arial Rounded MT Bold" size="27.0" />
+                                <Font name="Roboto Light" size="24.0" />
                             </font>
                         </Label>
-                        <Label layoutX="354.0" layoutY="168.0" prefHeight="32.0" prefWidth="88.0" text="Gmail:" textFill="WHITE">
+                        <Label layoutX="370.0" layoutY="168.0" prefHeight="32.0" prefWidth="88.0" text="Gmail:" textFill="WHITE">
                             <font>
-                                <Font name="Arial Rounded MT Bold" size="27.0" />
+                                <Font name="Roboto Light" size="24.0" />
                             </font>
                         </Label>
-                        <Label layoutX="354.0" layoutY="122.0" prefHeight="32.0" prefWidth="166.0" text="Contraseña:" textFill="WHITE">
+                        <Label layoutX="368.0" layoutY="125.0" prefHeight="32.0" prefWidth="166.0" text="Contraseña:" textFill="WHITE">
                             <font>
-                                <Font name="Arial Rounded MT Bold" size="27.0" />
+                                <Font name="Roboto Light" size="24.0" />
                             </font>
                         </Label>
-                        <Label layoutX="354.0" layoutY="216.0" prefHeight="32.0" prefWidth="74.0" text="Foto:" textFill="WHITE">
+                        <Label layoutX="370.0" layoutY="213.0" prefHeight="32.0" prefWidth="74.0" text="Foto:" textFill="WHITE">
                             <font>
-                                <Font name="Arial Rounded MT Bold" size="27.0" />
+                                <Font name="Roboto Light" size="24.0" />
                             </font>
                         </Label>
                         <TextField fx:id="textName" layoutX="540.0" layoutY="86.0" />
@@ -244,16 +231,16 @@
                                 <Font name="Arial Rounded MT Bold" size="15.0" />
                             </font>
                         </Button>
-                        <Button fx:id="buttonModify" layoutX="520.0" layoutY="337.0" mnemonicParsing="false" onAction="#modifyUser" prefHeight="27.0" prefWidth="172.0" text="Modificar usuario">
+                        <Button fx:id="buttonModify" layoutX="520.0" layoutY="337.0" mnemonicParsing="false" onAction="#modifyUser" prefHeight="27.0" prefWidth="172.0" style="-fx-background-color: #4282a6;" text="Modificar usuario" textFill="WHITE">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="15.0" />
                             </font>
                         </Button>
                     </children>
                 </AnchorPane>
-                <Button fx:id="buttonReproduction" layoutX="348.0" layoutY="412.0" mnemonicParsing="false" onAction="#buttonReproduction" prefHeight="38.0" prefWidth="154.0" style="-fx-background-color: #020113;" text="reproducir" textFill="WHITE">
+                <Button fx:id="buttonReproduction" layoutX="348.0" layoutY="412.0" mnemonicParsing="false" onAction="#buttonReproduction" prefHeight="38.0" prefWidth="154.0" style="-fx-background-color: #020113;" text="Reproducir" textFill="WHITE">
                     <font>
-                        <Font name="Arial Rounded MT Bold" size="14.0" />
+                        <Font name="Roboto Light" size="14.0" />
                     </font>
                 </Button>
             </children>
