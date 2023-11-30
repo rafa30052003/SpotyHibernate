@@ -6,12 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controller.ControllerAddAlbum"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAddAlbum">
    <top>
-      <AnchorPane prefHeight="140.0" prefWidth="396.0" style="-fx-background-color: #1DB954FF;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="140.0" prefWidth="396.0" style="-fx-background-color: #4282a6;" BorderPane.alignment="CENTER">
          <children>
             <Text fill="WHITE" layoutX="172.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NUEVO ÁLBUM" textAlignment="CENTER" wrappingWidth="255.73676300048828">
                <font>
@@ -47,7 +44,7 @@
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font></Label>
-            <Button layoutX="193.0" layoutY="221.0" mnemonicParsing="false" onAction="#addCosumer" prefHeight="35.0" prefWidth="215.0" style="-fx-background-color: #1DB954FF;" text="GUARDAR" textFill="#fcfcfc">
+            <Button layoutX="193.0" layoutY="221.0" mnemonicParsing="false" onAction="#addCosumer" prefHeight="35.0" prefWidth="215.0" style="-fx-background-color: #4282a6;" text="GUARDAR" textFill="#fcfcfc">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
@@ -60,7 +57,7 @@
             </Pane>
             <ComboBox fx:id="txtArtista" layoutX="226.0" layoutY="173.0" prefWidth="150.0" />
             <DatePicker fx:id="txtDate" layoutX="226.0" layoutY="122.0" prefHeight="26.0" prefWidth="148.0" />
-            <Button layoutX="491.0" layoutY="221.0" mnemonicParsing="false" onAction="#volver" prefHeight="19.0" prefWidth="79.0" style="-fx-background-color: #1DB954FF;" text="Volver" textFill="#fcfcfc">
+            <Button layoutX="491.0" layoutY="221.0" mnemonicParsing="false" onAction="#volver" prefHeight="19.0" prefWidth="79.0" style="-fx-background-color: #4282a6;" text="Volver" textFill="#fcfcfc">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>

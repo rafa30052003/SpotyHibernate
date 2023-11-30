@@ -1,37 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="834.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAdminHome">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="834.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAdminHome">
    <left>
-      <VBox prefHeight="834.0" prefWidth="296.0" style="-fx-background-color: #020113; -fx-border-color: #1DB954; -fx-border-width: 0px 8px 0px 0px;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="834.0" prefWidth="296.0" style="-fx-background-color: #004777; -fx-border-color: #6a9ce4; -fx-border-width: 0px 8px 0px 0px;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="168.0" fitWidth="296.0" pickOnBounds="true" preserveRatio="true" />
-            <Button mnemonicParsing="false" onMouseClicked="#artist" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #020113; -fx-border-color: #1DB954; -fx-border-width: 2px 0px 2px 0px;" text="ARTISTA" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+            <Button mnemonicParsing="false" onMouseClicked="#artist" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #004777; -fx-border-color: #6a9ce4; -fx-border-width: 2px 0px 2px 0px;" text="ARTISTA" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#album" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #020113; -fx-border-color: #1DB954; -fx-border-width: 0px 0px 2px 0px;" text="ALBUM" textFill="WHITE" textOverrun="LEADING_ELLIPSIS">
+            <Button mnemonicParsing="false" onMouseClicked="#album" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #004777; -fx-border-color: #6a9ce4; -fx-border-width: 0px 0px 2px 0px;" text="ALBUM" textFill="WHITE" textOverrun="LEADING_ELLIPSIS">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#song" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #020113; -fx-border-color: #1DB954; -fx-border-width: 0px 0px 2px 0px;" text="CANCION" textFill="WHITE">
+            <Button mnemonicParsing="false" onMouseClicked="#song" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #004777; -fx-border-color: #6a9ce4; -fx-border-width: 0px 0px 2px 0px;" text="CANCION" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#switchLogin" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #020113;" text="SALIR" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#switchLogin" prefHeight="166.0" prefWidth="296.0" style="-fx-background-color: #004777;" text="SALIR" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
@@ -40,21 +34,21 @@
       </VBox>
    </left>
    <center>
-      <AnchorPane fx:id="ap" prefHeight="834.0" prefWidth="863.0" style="-fx-background-color: #020113;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="ap" prefHeight="834.0" prefWidth="863.0" style="-fx-background-color: #004777;" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="myartists" layoutX="52.0" layoutY="113.0" prefHeight="580.0" prefWidth="742.0" style="-fx-background-color: #020113;">
+            <TableView fx:id="myartists" layoutX="52.0" layoutY="113.0" prefHeight="580.0" prefWidth="742.0" style="-fx-background-color: #6a9ce4;">
               <columns>
-                <TableColumn fx:id="photo" prefWidth="221.33334350585938" style="-fx-background-color: #020113; -fx-text-fill: white;" text="FOTO" />
-                <TableColumn fx:id="name" prefWidth="245.86672973632812" style="-fx-background-color: #020113; -fx-text-fill: white;" text="NOMBRE" />
-                  <TableColumn fx:id="nationality" prefWidth="273.6000122070312" style="-fx-background-color: #020113; -fx-text-fill: white;" text="NACIONALIDAD" />
+                <TableColumn fx:id="photo" prefWidth="221.33334350585938" style="-fx-background-color: #6a9ce4; -fx-text-fill: white; fx-font-size: 14px;" text="FOTO" />
+                <TableColumn fx:id="name" prefWidth="245.86672973632812" style="-fx-background-color: #6a9ce4; -fx-text-fill: white;" text="NOMBRE" />
+                  <TableColumn fx:id="nationality" prefWidth="273.6000122070312" style="-fx-background-color: #6a9ce4; -fx-text-fill: white;" text="NACIONALIDAD" />
               </columns>
             </TableView>
-            <Button layoutX="56.0" layoutY="731.0" mnemonicParsing="false" onAction="#switchToAddArtist" prefHeight="42.0" prefWidth="306.0" style="-fx-background-color: #1DB954;" text="INSERTAR" textFill="#fcfcfc">
+            <Button layoutX="56.0" layoutY="731.0" mnemonicParsing="false" onAction="#switchToAddArtist" prefHeight="42.0" prefWidth="306.0" style="-fx-background-color: #6a9ce4;" text="INSERTAR" textFill="#fcfcfc">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Button>
-            <Button layoutX="448.0" layoutY="731.0" mnemonicParsing="false" onAction="#deleteArtist" prefHeight="42.0" prefWidth="324.0" style="-fx-background-color: #1DB954;" text="ELIMINAR" textFill="#fcfcfc">
+            <Button layoutX="448.0" layoutY="731.0" mnemonicParsing="false" onAction="#deleteArtist" prefHeight="42.0" prefWidth="324.0" style="-fx-background-color: #6a9ce4;" text="ELIMINAR" textFill="#fcfcfc">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
