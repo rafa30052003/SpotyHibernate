@@ -3,6 +3,7 @@ package org.example.model.DAO;
 import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.User;
+import org.example.model.domain.list;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
