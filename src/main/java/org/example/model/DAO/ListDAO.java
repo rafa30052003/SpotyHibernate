@@ -172,14 +172,14 @@ public class ListDAO extends list implements iDAO<list, Integer> {
         List<Song> songs = new ArrayList<>();
 
                     Song song = new Song();
-                    song.setDuration(rs.getString("duration"));
+                 /*   song.setDuration(rs.getString("duration"));
                     // También necesitarás establecer el álbum al que pertenece esta canción aquí
                     Album album = new Album();
                     album.setName(rs.getString("name_disk"));
                     song.setAlbum(album);
-                    songs.add(song);
+                    songs.add(song);*/
                     return songs;
-                }
+    }
 
 
     /**
@@ -189,7 +189,7 @@ public class ListDAO extends list implements iDAO<list, Integer> {
      * @throws SQLException
      */
     public void deleteSongOfList(int songId, int listId) throws SQLException {
-        try (PreparedStatement pst = conn.prepareStatement(DELETESongofList)) {
+        /*try (PreparedStatement pst = conn.prepareStatement(DELETESongofList)) {
             pst.setInt(1, songId);
             pst.setInt(2, listId);
 
@@ -202,7 +202,7 @@ public class ListDAO extends list implements iDAO<list, Integer> {
                 System.out.println("No se encontró la relación entre la canción y la lista.");
                 // Puedes manejar este caso según tus necesidades
             }
-        }
+        }*/
     }
 
 

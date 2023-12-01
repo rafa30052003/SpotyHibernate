@@ -57,10 +57,7 @@ public class ControllerAlbum {
 
     private AlbumDAO albumDAO;
 
-    public ControllerAlbum() {
-        Connection conn = Connect.getConnect();
-        albumDAO = new AlbumDAO(conn);
-    }
+
     @FXML
     public void initialize() throws SQLException {
         columNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -130,12 +127,8 @@ public class ControllerAlbum {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                try {
-                    albumDAO.delete(selectedAlbum);
-                    observableAlbumList.remove(selectedAlbum);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                albumDAO.delete(selectedAlbum);
+                observableAlbumList.remove(selectedAlbum);
             }
         }
     }

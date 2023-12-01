@@ -78,7 +78,7 @@ public class ControllerAddArtist implements Initializable {
             artistDAO.save(a);
             App.setRoot("HomeAdmin");
 
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

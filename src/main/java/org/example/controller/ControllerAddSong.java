@@ -36,14 +36,10 @@ public class ControllerAddSong implements Initializable {
     private String audioFilePath;
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            AlbumDAO adao = new AlbumDAO();
-            List<String> songNames = adao.findNames();
-            ObservableList<String> namesObservableList = FXCollections.observableArrayList(songNames);
-            txtalbum.setItems(namesObservableList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        AlbumDAO adao = new AlbumDAO();
+        List<String> songNames = adao.findNames();
+        ObservableList<String> namesObservableList = FXCollections.observableArrayList(songNames);
+        txtalbum.setItems(namesObservableList);
     }
     @FXML
     private void addSong() {
@@ -75,8 +71,6 @@ public class ControllerAddSong implements Initializable {
               sdao.save(s);
              App.setRoot("HomeAdmin");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

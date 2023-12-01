@@ -47,6 +47,10 @@ public class User implements Serializable {
         this.lists = new ArrayList<>();
     }
 
+    public User(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

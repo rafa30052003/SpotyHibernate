@@ -53,7 +53,7 @@ public class UserDAO implements iDAO<User, String> {
      */
 
 
-    @Override
+
     public boolean insert(User user) {
         try {
             manager.getTransaction().begin();
@@ -97,7 +97,7 @@ public class UserDAO implements iDAO<User, String> {
      * @param user
      * @return true si el usuario se mosifica en la base de datos y un fasle si el usuario no se apodido modificar en la base de datos
      */
-    @Override
+
     public boolean update(User user) {
         try {
             manager.getTransaction().begin();

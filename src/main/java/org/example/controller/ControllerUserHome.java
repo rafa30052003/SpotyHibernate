@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ControllerUserHome {
     private int selectedListId;  // Variable para almacenar el ID de la lista seleccionada
@@ -519,12 +520,16 @@ public class ControllerUserHome {
 
         /////
 
-        // Configura las celdas de las columnas para la tabla de álbumes
+
         columnnName_Albun.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnn_Publication_dateAlbun.setCellValueFactory(new PropertyValueFactory<>("public_time"));
         columnn_N_reproduction.setCellValueFactory(new PropertyValueFactory<>("nrepro"));
-        columnn_Albun_NameArtistAlbun.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName_artist().getName()));
-        stopButton.setOnAction(event -> stopMp3());
+        columnn_Albun_NameArtistAlbun.setCellValueFactory(data -> {
+            Set<Artist> artists = data.getValue().getArtists();
+            String artistNames = artists.stream().map(Artist::getName).collect(Collectors.joining(", "));
+            return new SimpleStringProperty(artistNames);
+        });
+
 
 
         // Obtén los datos de álbumes desde la base de datos
@@ -589,13 +594,8 @@ public class ControllerUserHome {
                 tableAlbun.refresh(); // Actualiza la tabla
 
                 // Llama a la función de actualización en la base de datos
-                try {
-                    AlbumDAO albumDAO = new AlbumDAO();
-                    albumDAO.updateReproductionCount(selectedAlbum);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // Manejar errores de actualización en la base de datos
-                }
+                AlbumDAO albumDAO = new AlbumDAO();
+                albumDAO.updateReproductionCount(selectedAlbum);
             }
         } else if (tableSong.isVisible()) {
             Song selectedSong = tableSong.getSelectionModel().getSelectedItem();
@@ -607,13 +607,8 @@ public class ControllerUserHome {
                 tableSong.refresh(); // Actualiza la tabla
 
                 // Llama a la función de actualización en la base de datos
-                try {
-                    SongDAO songDAO = new SongDAO();
-                    songDAO.updateReproductionCount(selectedSong);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // Manejar errores de actualización en la base de datos
-                }
+                SongDAO songDAO = new SongDAO();
+                songDAO.updateReproductionCount(selectedSong);
 
                 // Reproduce la canción desde la URL del archivo MP3
                 playMp3(selectedSong.getArchive_song());
@@ -669,22 +664,17 @@ public class ControllerUserHome {
         AlbumDAO albunDao = new AlbumDAO();
 
         if (selectedAlbum != null) {
-            try {
-                // Llama a la función `findSongsByAlbumName` en tu DAO para obtener las canciones del álbum
-                List<Song> albumSongs = albunDao.findSongsByAlbumName(selectedAlbum.getName());
+            // Llama a la función `findSongsByAlbumName` en tu DAO para obtener las canciones del álbum
+            List<Song> albumSongs = albunDao.findSongsByAlbumName(selectedAlbum.getName());
 
-                // Convierte la lista de canciones en un ObservableList para mostrarla en la tabla
-                ObservableList<Song> albumSongsObservable = FXCollections.observableArrayList(albumSongs);
+            // Convierte la lista de canciones en un ObservableList para mostrarla en la tabla
+            ObservableList<Song> albumSongsObservable = FXCollections.observableArrayList(albumSongs);
 
-                // Establece los datos en la tabla de canciones
-                tableSong.setItems(albumSongsObservable);
+            // Establece los datos en la tabla de canciones
+            tableSong.setItems(albumSongsObservable);
 
-                // Activa la tabla de canciones y desactiva la tabla de álbumes
-                activeTablaSong();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // Manejar errores de base de datos
-            }
+            // Activa la tabla de canciones y desactiva la tabla de álbumes
+            activeTablaSong();
         }
     }
 

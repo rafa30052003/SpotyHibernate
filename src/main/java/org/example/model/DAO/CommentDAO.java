@@ -137,10 +137,7 @@ public class CommentDAO implements iDAO<Comment, Object> {
         }
     }
 
-    @Override
-    public boolean update(User user) {
-        return false;
-    }
+
 
     @Override
     public Comment save(Comment entity) {
@@ -148,10 +145,7 @@ public class CommentDAO implements iDAO<Comment, Object> {
         return null;
     }
 
-    @Override
-    public boolean insert(User user) {
-        return false;
-    }
+
 
 
     public void close() {

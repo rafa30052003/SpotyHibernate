@@ -147,11 +147,7 @@ public class ControllerAdminHome implements Initializable {
             public void handle(TableColumn.CellEditEvent<Artist, String> t) {
                 Artist selected = (Artist) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 selected.setPhoto(t.getNewValue());
-                try {
-                    adao.save(selected);
-                }catch (SQLException ex){
-                    ex.printStackTrace();
-                }
+                adao.save(selected);
 
             }
         });
@@ -176,11 +172,7 @@ public class ControllerAdminHome implements Initializable {
         nationality.setOnEditCommit(event -> {
             Artist selected = event.getRowValue();
             selected.setNationality(event.getNewValue());
-            try {
-                adao.save(selected);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            adao.save(selected);
         });
         myartists.setEditable(true);
         myartists.getSelectionModel().cellSelectionEnabledProperty().set(true);
@@ -193,12 +185,7 @@ public class ControllerAdminHome implements Initializable {
             // utils.alerta("Error", "", "Debes seleccionar un cliente");
             //Validates.alertError("ERROR", "ERROR EN VIAJES", "Debes seleccionar un viaje.");
         }else {
-            try {
-                adao.delete(myartists.getSelectionModel().getSelectedItem());
-            } catch (SQLException e) {
-
-                e.printStackTrace();
-            }
+            adao.delete(myartists.getSelectionModel().getSelectedItem());
 
             listaActualizable.remove(myartists.getSelectionModel().getSelectedItem());
         }

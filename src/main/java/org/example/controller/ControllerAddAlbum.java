@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class ControllerAddAlbum implements Initializable {
 
@@ -50,14 +51,10 @@ public class ControllerAddAlbum implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            ArtistDAO artistDAO = new ArtistDAO();
-            List<String> artistNames = artistDAO.findNames();
-            ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
-            txtArtista.setItems(namesObservableList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ArtistDAO artistDAO = new ArtistDAO();
+        List<String> artistNames = artistDAO.findNames();
+        ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
+        txtArtista.setItems(namesObservableList);
     }
     @FXML
     private void addCosumer() {
@@ -86,7 +83,7 @@ public class ControllerAddAlbum implements Initializable {
 
             Artist artistObject = new Artist();
             artistObject.setName(artist);
-            album.setName_artist(artistObject);
+            album.setArtists((Set<Artist>) artistObject);// porsi tocar
 
             AlbumDAO albumDAO = new AlbumDAO();
             albumDAO.save(album);
@@ -98,7 +95,7 @@ public class ControllerAddAlbum implements Initializable {
             imageView.setImage(null);
 
             System.out.println("Álbum guardado exitosamente.");
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -114,11 +114,7 @@ public class ControllerSong implements Initializable {
             public void handle(TableColumn.CellEditEvent<Song, String> t) {
                 Song selected = (Song) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 selected.setName_song(t.getNewValue());
-                try {
-                    sdao.save(selected);
-                }catch (SQLException ex){
-                    ex.printStackTrace();
-                }
+                sdao.save(selected);
 
             }
         });
@@ -134,11 +130,7 @@ public class ControllerSong implements Initializable {
             public void handle(TableColumn.CellEditEvent<Song, String> t) {
                 Song selected = (Song) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 selected.setDuration(t.getNewValue());
-                try {
-                    sdao.save(selected);
-                }catch (SQLException ex){
-                    ex.printStackTrace();
-                }
+                sdao.save(selected);
 
             }
         });
@@ -154,11 +146,7 @@ public class ControllerSong implements Initializable {
             public void handle(TableColumn.CellEditEvent<Song, String> t) {
                 Song selected = (Song) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 selected.setGender(t.getNewValue());
-                try {
-                    sdao.save(selected);
-                }catch (SQLException ex){
-                    ex.printStackTrace();
-                }
+                sdao.save(selected);
 
             }
         });
@@ -174,11 +162,7 @@ public class ControllerSong implements Initializable {
             public void handle(TableColumn.CellEditEvent<Song, Integer> t) {
                 Song selected = t.getTableView().getItems().get(t.getTablePosition().getRow());
                 selected.setNrepro(t.getNewValue());
-                try {
-                    sdao.save(selected);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                sdao.save(selected);
             }
         });
         List <Album> songsAlbum = (List<Album>) adao.findAll();
@@ -203,11 +187,7 @@ public class ControllerSong implements Initializable {
             Song selected = event.getRowValue();
             // Verifica si event.getNewValue() es null antes de intentar acceder a su nombre
             selected.setAlbum((event.getNewValue() != null) ? event.getNewValue() : new Album());
-            try {
-                sdao.save(selected);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            sdao.save(selected);
         });
 
         mysongs.setEditable(true);
@@ -222,12 +202,7 @@ public class ControllerSong implements Initializable {
             // utils.alerta("Error", "", "Debes seleccionar un cliente");
             //Validates.alertError("ERROR", "ERROR EN VIAJES", "Debes seleccionar un viaje.");
         }else {
-            try {
-                sdao.delete(mysongs.getSelectionModel().getSelectedItem());
-            } catch (SQLException e) {
-
-                e.printStackTrace();
-            }
+            sdao.delete(mysongs.getSelectionModel().getSelectedItem());
 
             listaActualizable.remove(mysongs.getSelectionModel().getSelectedItem());
         }

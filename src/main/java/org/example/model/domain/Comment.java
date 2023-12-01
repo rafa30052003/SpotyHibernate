@@ -37,11 +37,19 @@ public class Comment implements Serializable {
         this.comment = comment;
     }
 
-    public Comment(User nameUser, int selectedListId, String comment) {
-        this.user = nameUser;  // Supongo que el constructor de User acepta el nombre como parámetro
-        this.myList = new list(selectedListId, null, null, null);  // Supongo que el constructor de list acepta los parámetros necesarios
+    public Comment(String nameUser, int selectedListId, String comment) {
+        this.user = new User(nameUser);
+        this.myList = new list(selectedListId, null, null, null);
         this.comment = comment;
     }
+
+    public Comment(int id, String nameUser, int selectedListId, String comment) {
+        this.id = id;
+        this.user = new User(nameUser);
+        this.myList = new list(selectedListId, null, null, null);
+        this.comment = comment;
+    }
+
     public int getId() {
         return id;
     }
