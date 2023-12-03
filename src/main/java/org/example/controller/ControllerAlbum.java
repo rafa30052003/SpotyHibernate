@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class ControllerAlbum {
 
@@ -63,7 +64,18 @@ public class ControllerAlbum {
         columNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         columFecha.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPublic_time()).asString());
         columRepro.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNrepro()).asObject());
-        columArt.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName_artist().getName()));
+        columArt.setCellValueFactory(cellData -> {
+            Set<Artist> artists = cellData.getValue().getArtists();
+            StringBuilder artistsNames = new StringBuilder();
+            for (Artist artist : artists) {
+                artistsNames.append(artist.getName()).append(", ");
+            }
+            if (artistsNames.length() > 0) {
+                artistsNames.setLength(artistsNames.length() - 2);
+            }
+            return new SimpleStringProperty(artistsNames.toString());
+        });
+
         try {
             List<Album> albumList = albumDAO.findAll();
             observableAlbumList = FXCollections.observableArrayList(albumList);
@@ -82,7 +94,6 @@ public class ControllerAlbum {
             }
         });
 
-        // Configuración de la búsqueda en el método initialize
         FilteredList<Album> filteredData = new FilteredList<>(tableView.getItems(), e -> true);
         buscar.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(album -> {
@@ -91,8 +102,6 @@ public class ControllerAlbum {
                 }
 
                 String lowerCaseFilter = newValue.toLowerCase();
-
-                // Ajusta estas líneas según la estructura de tu clase Album y tus criterios de búsqueda
                 if (album.getName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
@@ -102,8 +111,10 @@ public class ControllerAlbum {
                 if (String.valueOf(album.getNrepro()).toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
-                if (album.getName_artist().getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
+                for (Artist artist : album.getArtists()) {
+                    if (artist.getName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
                 }
 
                 return false;
@@ -173,7 +184,6 @@ public class ControllerAlbum {
                     String newArtistName = artistComboBox.getValue();
 
                     try {
-                        AlbumDAO albumDAO = new AlbumDAO(Connect.getConnect());
                         Artist newArtist = new Artist();
                         newArtist.setName(newArtistName);
 
@@ -203,15 +213,12 @@ public class ControllerAlbum {
         filtrarAlbumesPorNombre(letra);
     }
         private void filtrarAlbumesPorNombre(String letra) throws SQLException {
-            // Cambiar esta línea para obtener una lista de álbumes
             List<Album> albumesFiltrados = albumDAO.findByName(letra);
 
             if (!albumesFiltrados.isEmpty()) {
-                // Si hay al menos un álbum encontrado, mostrarlos en la tabla
                 ObservableList<Album> listaObservableAlbumes = FXCollections.observableArrayList(albumesFiltrados);
                 tableView.setItems(listaObservableAlbumes);
             } else {
-                // Si no se encuentra ningún álbum, limpiar la tabla
                 tableView.setItems(FXCollections.emptyObservableList());
             }
     }
