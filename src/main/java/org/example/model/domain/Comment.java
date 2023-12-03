@@ -1,7 +1,5 @@
 package org.example.model.domain;
 
-import org.example.model.domain.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +20,7 @@ public class Comment implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "list_id", referencedColumnName = "id")
-    private list myList;
+    private Playlist myList;
 
     @Column(name = "comment")
     private String comment;
@@ -33,20 +31,20 @@ public class Comment implements Serializable {
 
     public Comment(User user, List myList, String comment) {
         this.user = user;
-        this.myList = (list) myList;
+        this.myList = (Playlist) myList;
         this.comment = comment;
     }
 
     public Comment(String nameUser, int selectedListId, String comment) {
         this.user = new User(nameUser);
-        this.myList = new list(selectedListId, null, null, null);
+        this.myList = new Playlist(selectedListId, null, null, null);
         this.comment = comment;
     }
 
     public Comment(int id, String nameUser, int selectedListId, String comment) {
         this.id = id;
         this.user = new User(nameUser);
-        this.myList = new list(selectedListId, null, null, null);
+        this.myList = new Playlist(selectedListId, null, null, null);
         this.comment = comment;
     }
 
@@ -72,11 +70,11 @@ public class Comment implements Serializable {
         this.user = user;
     }
 
-    public list getMyList() {
+    public Playlist getMyList() {
         return myList;
     }
 
-    public void setMyList(list myList) {
+    public void setMyList(Playlist myList) {
         this.myList = myList;
     }
 

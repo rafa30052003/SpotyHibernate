@@ -10,7 +10,7 @@ public class Connection {
     private static Connection _newInstance;
 
     private Connection() {
-        emf = Persistence.createEntityManagerFactory("sql");
+        emf = Persistence.createEntityManagerFactory("aplicacion");
         if(emf==null) {
             Loggers.LogsSevere("No se puede establecer la conexion");
         }

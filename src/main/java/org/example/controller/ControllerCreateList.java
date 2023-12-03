@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.example.model.DAO.ListDAO;
-import org.example.model.domain.list;
+import org.example.model.domain.Playlist;
 
 import java.sql.SQLException;
 
@@ -28,12 +28,12 @@ public class ControllerCreateList {
     @FXML
     public void addList() {
         try {
-            list lists=new list();
+            Playlist lists=new Playlist();
             ListDAO listDAO=new ListDAO();
             String name = nameList.getText();
             String description = descriptionList.getText();
             String Name_user = ControllerLogin.getLoggedInUserName();
-            list newlist = new list(0,name, description,Name_user);
+            Playlist newlist = new Playlist(0,name, description,Name_user);
             listDAO.save(newlist);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

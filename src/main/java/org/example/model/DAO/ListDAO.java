@@ -1,21 +1,17 @@
 package org.example.model.DAO;
 
-import java.sql.*;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
-import org.example.model.domain.Album;
 import org.example.model.domain.Song;
-import org.example.model.domain.User;
-import org.example.model.domain.list;
+import org.example.model.domain.Playlist;
 
 import javax.persistence.*;
 
-public class ListDAO extends list implements iDAO<list, Integer> {
+public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
     private final static String FINDALL ="SELECT id, description, name_list, name_user FROM list";
 
     private final static   String ListSub ="SELECT l.name_list FROM list l JOIN subscription s ON l.id = s.id_list WHERE s.name_user  = ?";
@@ -46,19 +42,19 @@ public class ListDAO extends list implements iDAO<list, Integer> {
     public List<String> findAllNameLists() throws SQLException {
         manager = Connection.getConnect().createEntityManager();
         List<String> nameLists = new ArrayList<>();
-        Query query = manager.createQuery("SELECT u FROM list u", list.class);
+        Query query = manager.createQuery("SELECT u FROM Playlist u", Playlist.class);
         query.executeUpdate();
         return query.getResultList();
     }
 
 
     @Override
-    public List<list> findAll() throws SQLException {
+    public List<Playlist> findAll() throws SQLException {
         return null;
     }
 
     @Override
-    public list findById(Integer id) throws SQLException {
+    public Playlist findById(Integer id) throws SQLException {
         return null;
     }
 
@@ -69,7 +65,7 @@ public class ListDAO extends list implements iDAO<list, Integer> {
      * @throws SQLException
      */
     @Override
-    public list save(list entity) throws SQLException {
+    public Playlist save(Playlist entity) throws SQLException {
         if (entity != null) {
             Query query = manager.createNativeQuery(INSERT);
             query.setParameter("id", entity.getId());
@@ -83,7 +79,7 @@ public class ListDAO extends list implements iDAO<list, Integer> {
     }
 
     @Override
-    public void delete(list entity) throws SQLException {
+    public void delete(Playlist entity) throws SQLException {
 
     }
 
@@ -130,7 +126,7 @@ public class ListDAO extends list implements iDAO<list, Integer> {
      * @return
      * @throws SQLException
      */
-    public list update(list entity) throws SQLException {
+    public Playlist update(Playlist entity) throws SQLException {
         String INSERT ="INSERT INTO list (id, name_list, description, name_user)(:ID,:name_list,:description,:name_user)";
         Query query = manager.createNativeQuery(INSERT);
         query.setParameter("ID", entity.getId());

@@ -3,7 +3,7 @@ package org.example.model.DAO;
 import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.User;
-import org.example.model.domain.list;
+import org.example.model.domain.Playlist;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -173,7 +173,7 @@ public class UserDAO implements iDAO<User, String> {
 
             User user = manager.find(User.class, nameUser);
             if (user != null) {
-                List<list> lists = user.getLists();
+                List<Playlist> lists = user.getLists();
                 if (lists != null) {
                     lists.removeIf(list -> list.getId() == idList);
 
