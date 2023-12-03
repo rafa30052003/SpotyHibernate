@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
 @Entity
-@Table (name = "ARTIST")
+@Table (name = "artist")
 public class Artist implements Serializable {
 
     private static final long serialVersionUID=1L;
     @Id
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
-    @Column(name = "NATIONALITY")
+    @Column(name = "nationality")
     private Nationality nationality;
-    @Column(name = "PHOTO")
+    @Column(name = "photo")
     private String photo;
 
     public Artist() {

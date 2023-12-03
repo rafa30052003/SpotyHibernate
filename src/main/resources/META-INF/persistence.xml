@@ -11,7 +11,8 @@
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="" />
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+
             <property name="hibernate.hbm2ddl.auto" value="create-drop" /> <!--validate (ya deberí
 existir -> el más seguro en producción si ya está creado)) craete / create-drop || update -->
             <property name="hibernate.show_sql" value="true"/>

@@ -7,18 +7,18 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "ALBUM")
+@Table(name = "album")
 public class Album  implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
-    @Column(name = "PHOTO")
+    @Column(name = "photo")
     private String photo;
-    @Column(name = "PUBLIC_TIME")
+    @Column(name = "publication_date")
     private Date public_time;
-    @Column(name = "NREPRO")
+    @Column(name = "n_reproduction")
     private int nrepro;
     @ManyToMany
     @JoinTable(
