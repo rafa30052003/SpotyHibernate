@@ -5,17 +5,17 @@ import java.util.Set;
 @Entity
 @Table(name = "STUDENT_TBL")
 
-public class list {
+public class Playlist {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int id;
+    public int id;
     @Column(name = "DESCRIPTION")
-    private String description;
+    public String description;
     @Column(name = "NAMELIST")
-    private String name_list;
+    public String name_list;
     @Column(name = "NAMEUSER")
-    private String name_user;
+    public String name_user;
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "song_list",
     joinColumns = {
@@ -27,7 +27,7 @@ public class list {
             )
     private Set<Song> songs;
 
-    public list(int id, String description, String name_list, String name_user) {
+    public Playlist(int id, String description, String name_list, String name_user) {
         this.id = id;
         this.description = description;
         this.name_list = name_list;
@@ -76,14 +76,14 @@ public class list {
                 '}';
     }
 
-    public list() {
+    public Playlist() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        list list = (list) o;
+        Playlist list = (Playlist) o;
         return id == list.id && Objects.equals(description, list.description) && Objects.equals(name_list, list.name_list) && Objects.equals(name_user, list.name_user) && Objects.equals(songs, list.songs);
     }
 

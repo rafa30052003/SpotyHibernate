@@ -36,7 +36,7 @@ public class Song implements Serializable {
                     @JoinColumn(name = "id_song",referencedColumnName = "id")
             }
     )
-    private Set<list> lists;
+    private Set<Playlist> lists;
 
 
     public Song(int id, String name_song, String gender, int nrepro, String duration, Album album, String archive_song) {

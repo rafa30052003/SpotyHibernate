@@ -33,7 +33,7 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_name"),
             inverseJoinColumns = @JoinColumn(name = "list_id")
     )
-    private List<list> lists;
+    private List<Playlist> lists;
 
     public User() {
         this.lists = new ArrayList<>();
@@ -91,11 +91,11 @@ public class User implements Serializable {
         this.comments = comments;
     }
 
-    public List<list> getLists() {
+    public List<Playlist> getLists() {
         return lists;
     }
 
-    public void setLists(List<list> lists) {
+    public void setLists(List<Playlist> lists) {
         this.lists = lists;
     }
 
