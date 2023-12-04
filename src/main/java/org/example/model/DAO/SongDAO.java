@@ -25,17 +25,25 @@ public class SongDAO extends Song implements iDAO<Song, Integer> {
     private EntityManager manager;
 
     @Override
-    public List<Song> findAll() throws SQLException {
-        List<Song> songs=new ArrayList<>();
-        try{
-            Query q=manager.createNativeQuery("SELECT a FROM Song a",Song.class);
-            songs=q.getResultList();
-        }catch (Exception e ){
-            e.printStackTrace();
-        }
-        return songs;
+    public List<Song> findAll() {
+        List<Song> songs = new ArrayList<>();
+        EntityManager manager = null;
 
+        try {
+            manager = Connection.getConnect().createEntityManager();
+            Query q = manager.createQuery("SELECT s FROM Song s", Song.class);
+            songs = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (manager != null && manager.isOpen()) {
+                manager.close();
+            }
+        }
+
+        return songs;
     }
+
 
     /**
      * Metodo que usca una cancion por su clave
@@ -138,21 +146,33 @@ public class SongDAO extends Song implements iDAO<Song, Integer> {
 
 
     public void updateReproductionCount(Song song) {
+        EntityManager manager = null;
+        EntityTransaction transaction = null;
+
         try {
-            EntityTransaction transaction = manager.getTransaction();
+            manager = Connection.getConnect().createEntityManager();
+            transaction = manager.getTransaction();
             transaction.begin();
 
             Song songToUpdate = manager.find(Song.class, song.getId());
             if (songToUpdate != null) {
                 songToUpdate.setNrepro(song.getNrepro());
-               manager.merge(songToUpdate);
+                // No es necesario usar merge en este caso, ya que la entidad está en el contexto de persistencia
             }
 
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            if (manager != null && manager.isOpen()) {
+                manager.close();
+            }
         }
     }
+
 }
 
 

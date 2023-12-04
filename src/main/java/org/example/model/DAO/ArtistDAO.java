@@ -36,11 +36,14 @@ public class ArtistDAO extends Artist implements iDAO<Artist,String> {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            manager.close();
+            if (manager != null && manager.isOpen()) {
+                manager.close();
+            }
         }
 
         return result;
     }
+
 
     /**
      * Metodo que busca el artista por su id
