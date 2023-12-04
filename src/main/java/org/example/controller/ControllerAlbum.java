@@ -76,16 +76,9 @@ public class ControllerAlbum {
             return new SimpleStringProperty(artistsNames.toString());
         });
 
-        try {
-            List<Album> albumList = albumDAO.findAll();
-            observableAlbumList = FXCollections.observableArrayList(albumList);
-            tableView.setItems(observableAlbumList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-           List<Album> albumList = albumDAO.findAll();
-            ObservableList<Album> observableAlbumList = FXCollections.observableArrayList(albumList);
-            tableView.setItems(observableAlbumList);
+        List<Album> albumList = albumDAO.findAll();
+        ObservableList<Album> observableAlbumList = FXCollections.observableArrayList(albumList);
+        tableView.setItems(observableAlbumList);
 
         tableView.getSelectionModel().setCellSelectionEnabled(true);
         tableView.setOnMouseClicked(event -> {
@@ -93,6 +86,7 @@ public class ControllerAlbum {
                 tableView.getSelectionModel().clearSelection();
             }
         });
+
 
         FilteredList<Album> filteredData = new FilteredList<>(tableView.getItems(), e -> true);
         buscar.textProperty().addListener((observable, oldValue, newValue) -> {
