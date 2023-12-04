@@ -534,17 +534,12 @@ public class ControllerUserHome {
 
         // Obtén los datos de álbumes desde la base de datos
         // Obtén los datos de canciones desde la base de datos
-        try {
-            SongDAO songDAO = new SongDAO();
-            List<Song> songs = songDAO.findAll();
-            ObservableList<Song> songObservableList = FXCollections.observableArrayList(songs);
+        SongDAO songDAO = new SongDAO();
+        List<Song> songs = songDAO.findAll();
+        ObservableList<Song> songObservableList = FXCollections.observableArrayList(songs);
 
-            // Asigna los datos de álbumes a la tabla
-            tableSong.setItems(songObservableList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Maneja los errores de base de datos
-        }
+        // Asigna los datos de álbumes a la tabla
+        tableSong.setItems(songObservableList);
         //inicializa los datos de albun
         AlbumDAO albumDAO = new AlbumDAO();
         List<Album> albums = albumDAO.findAll();
@@ -703,22 +698,17 @@ public class ControllerUserHome {
 
     @FXML
     private void buttonShowAllSongs() {
-        try {
-            // Llama a la función `findAll` en tu DAO para obtener todas las canciones de la base de datos
-            List<Song> allSongs = songDAO.findAll();
+        // Llama a la función `findAll` en tu DAO para obtener todas las canciones de la base de datos
+        List<Song> allSongs = songDAO.findAll();
 
-            // Convierte la lista de canciones en un ObservableList para mostrarla en la tabla
-            ObservableList<Song> allSongsObservable = FXCollections.observableArrayList(allSongs);
+        // Convierte la lista de canciones en un ObservableList para mostrarla en la tabla
+        ObservableList<Song> allSongsObservable = FXCollections.observableArrayList(allSongs);
 
-            // Establece los datos en la tabla de canciones
-            tableSong.setItems(allSongsObservable);
+        // Establece los datos en la tabla de canciones
+        tableSong.setItems(allSongsObservable);
 
-            // Activa la tabla de canciones y desactiva la tabla de álbumes
-            activeTablaSong();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejar errores de base de datos
-        }
+        // Activa la tabla de canciones y desactiva la tabla de álbumes
+        activeTablaSong();
     }
 
 
