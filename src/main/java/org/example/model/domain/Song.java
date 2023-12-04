@@ -5,26 +5,26 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 @Entity
-@Table(name = "SONG")
+@Table(name = "song")
 public class Song implements Serializable {
     private static final long serialVersionUID=1L;
     @Id
     @GeneratedValue
-    @Column(name = "ID")
+    @Column(name = "id")
     private int id;
-    @Column(name = "NAME_SONG")
+    @Column(name = "name_song")
     private String name_song;
-    @Column(name = "GENDER")
+    @Column(name = "gender")
     private String gender;
-    @Column(name = "NREPO")
+    @Column(name = "N_reproduction")
     private int nrepro;
-    @Column(name = "DURATION")
+    @Column(name = "duration")
     private String duration;
-    @Column(name = "ARCHIVE_SONG")
+    @Column(name = "archive_song")
     private String archive_song;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NAME_ALBUM")
+    @JoinColumn(name = "name_disk")
     private Album album;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

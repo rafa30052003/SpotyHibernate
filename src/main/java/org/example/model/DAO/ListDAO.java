@@ -33,12 +33,7 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
      */
 
     private EntityManager manager;
-    private static EntityManagerFactory emf;
-    public ListDAO() {
-        // Código de inicialización
-        emf = Persistence.createEntityManagerFactory("aplicacion");
-        manager = emf.createEntityManager();
-    }
+
     public List<String> findAllNameLists() throws SQLException {
         manager = Connection.getConnect().createEntityManager();
         List<String> nameLists = new ArrayList<>();
