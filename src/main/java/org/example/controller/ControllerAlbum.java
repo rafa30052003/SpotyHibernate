@@ -60,20 +60,13 @@ public class ControllerAlbum {
 
 
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize()  {
         columNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         columFecha.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPublic_time()).asString());
         columRepro.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNrepro()).asObject());
         columArt.setCellValueFactory(cellData -> {
-            Set<Artist> artists = cellData.getValue().getArtists();
-            StringBuilder artistsNames = new StringBuilder();
-            for (Artist artist : artists) {
-                artistsNames.append(artist.getName()).append(", ");
-            }
-            if (artistsNames.length() > 0) {
-                artistsNames.setLength(artistsNames.length() - 2);
-            }
-            return new SimpleStringProperty(artistsNames.toString());
+            Artist artist = cellData.getValue().getArtist();
+            return new SimpleStringProperty(artist != null ? artist.getName() : "");
         });
 
         List<Album> albumList = albumDAO.findAll();
@@ -105,11 +98,11 @@ public class ControllerAlbum {
                 if (String.valueOf(album.getNrepro()).toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
-                for (Artist artist : album.getArtists()) {
+              /*  for (Artist artist : album.getArtist) {
                     if (artist.getName().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
-                }
+                }*/
 
                 return false;
             });
@@ -140,7 +133,7 @@ public class ControllerAlbum {
 
 
 
-    public void editarAlbum(ActionEvent event) throws SQLException {
+    public void editarAlbum(ActionEvent event)  {
         Album selectedAlbum = tableView.getSelectionModel().getSelectedItem();
         if (selectedAlbum != null) {
             Dialog<String> dialog = new Dialog<>();

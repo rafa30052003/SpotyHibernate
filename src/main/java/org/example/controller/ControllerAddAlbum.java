@@ -3,7 +3,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +27,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class ControllerAddAlbum implements Initializable {
 
@@ -51,13 +53,14 @@ public class ControllerAddAlbum implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArtistDAO artistDAO = new ArtistDAO();
-        List<String> artistNames = artistDAO.findNames();
-        ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
-        txtArtista.setItems(namesObservableList);
+            ArtistDAO artistDAO = new ArtistDAO();
+            List<String> artistNames = artistDAO.findNames();
+            ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
+            txtArtista.setItems(namesObservableList);
+
     }
     @FXML
-    private void addCosumer() {
+    private void addCosumer() throws IOException {
         String name = txtName.getText();
         LocalDate date = txtDate.getValue();
         String artist = txtArtista.getValue();
@@ -69,7 +72,6 @@ public class ControllerAddAlbum implements Initializable {
             alert.showAndWait();
             return;
         }
-        try {
             File selectedFile = elegirFoto();
             FileInputStream inputStream = new FileInputStream(selectedFile);
             byte[] photo = new byte[inputStream.available()];
@@ -83,7 +85,7 @@ public class ControllerAddAlbum implements Initializable {
 
             Artist artistObject = new Artist();
             artistObject.setName(artist);
-            album.setArtists((Set<Artist>) artistObject);// porsi tocar
+            album.setArtist(artistObject);
 
             AlbumDAO albumDAO = new AlbumDAO();
             albumDAO.save(album);
@@ -95,10 +97,7 @@ public class ControllerAddAlbum implements Initializable {
             imageView.setImage(null);
 
             System.out.println("Álbum guardado exitosamente.");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
 
     @FXML
     private File elegirFoto() {
@@ -124,7 +123,10 @@ public class ControllerAddAlbum implements Initializable {
     void volver(ActionEvent event) throws IOException {
         App.setRoot("homeAdmin");
     }
-    }
+}
+
+
+
 
 
 
