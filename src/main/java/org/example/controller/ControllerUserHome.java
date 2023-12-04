@@ -546,17 +546,12 @@ public class ControllerUserHome {
             // Maneja los errores de base de datos
         }
         //inicializa los datos de albun
-        try {
-            AlbumDAO albumDAO = new AlbumDAO();
-            List<Album> albums = albumDAO.findAll();
-            ObservableList<Album> albumObservableList = FXCollections.observableArrayList(albums);
+        AlbumDAO albumDAO = new AlbumDAO();
+        List<Album> albums = albumDAO.findAll();
+        ObservableList<Album> albumObservableList = FXCollections.observableArrayList(albums);
 
-            // Asigna los datos de álbumes a la tabla
-            tableAlbun.setItems(albumObservableList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Maneja los errores de base de datos
-        }
+        // Asigna los datos de álbumes a la tabla
+        tableAlbun.setItems(albumObservableList);
         listMyList.setOnMouseClicked(event -> {
             MouseEvent mouseEvent = (MouseEvent) event;
             Object selectedListName = listMyList.getSelectionModel().getSelectedItem();
