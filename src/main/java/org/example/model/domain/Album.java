@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "album")
@@ -15,36 +14,32 @@ public class Album  implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "photo", columnDefinition = "longlob")
+    @Column(name = "photo", columnDefinition = "longblob")
     private String photo;
     @Column(name = "publication_date")
     private Date public_time;
     @Column(name = "n_reproduction")
     private int nrepro;
-    @ManyToMany
-    @JoinTable(
-            name = "ALBUM_ARTIST",
-            joinColumns = @JoinColumn(name = "NAME_ARTIST"),
-            inverseJoinColumns = @JoinColumn(name = "NAME")
-    )
-    private Set<Artist> artists;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "name_artist")
+    private Artist artist;
 
     public Album() {
     }
 
-    public Album(String name, String photo, Date public_time, int nrepro, Set<Artist> artists) {
+    public Album(String name, String photo, Date public_time, int nrepro, Artist artist) {
         this.name = name;
         this.photo = photo;
         this.public_time = public_time;
         this.nrepro = nrepro;
-        this.artists = artists;
+        this.artist = artist;
     }
 
-    public Album(String photo, Date public_time, int nrepro, Set<Artist> artists) {
+    public Album(String photo, Date public_time, int nrepro, Artist artist) {
         this.photo = photo;
         this.public_time = public_time;
         this.nrepro = nrepro;
-        this.artists = artists;
+        this.artist = artist;
     }
 
     public String getName() {
@@ -79,12 +74,12 @@ public class Album  implements Serializable {
         this.nrepro = nrepro;
     }
 
-    public Set<Artist> getArtists() {
-        return artists;
+    public Artist getArtist() {
+        return artist;
     }
 
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 
     @Override
@@ -92,12 +87,12 @@ public class Album  implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return nrepro == album.nrepro && Objects.equals(name, album.name) && Objects.equals(photo, album.photo) && Objects.equals(public_time, album.public_time) && Objects.equals(artists, album.artists);
+        return nrepro == album.nrepro && Objects.equals(name, album.name) && Objects.equals(photo, album.photo) && Objects.equals(public_time, album.public_time) && Objects.equals(artist, album.artist);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, photo, public_time, nrepro, artists);
+        return Objects.hash(name, photo, public_time, nrepro, artist);
     }
 
     @Override
@@ -107,7 +102,7 @@ public class Album  implements Serializable {
                 ", photo='" + photo + '\'' +
                 ", public_time=" + public_time +
                 ", nrepro=" + nrepro +
-                ", artists=" + artists +
+                ", artist=" + artist +
                 '}';
     }
 }
