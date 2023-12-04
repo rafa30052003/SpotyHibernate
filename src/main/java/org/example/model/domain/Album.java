@@ -14,7 +14,8 @@ public class Album  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "name")
     private String name;
-    @Column(name = "photo")
+
+    @Column(name = "photo", columnDefinition = "longlob")
     private String photo;
     @Column(name = "publication_date")
     private Date public_time;
