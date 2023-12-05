@@ -4,8 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="Admin")
-public class Admin implements Serializable {
+@PrimaryKeyJoinColumn(name = "NAME", referencedColumnName = "NAME")
+public class Admin extends User implements Serializable {
+
     private  static  final long serialVersionUID=1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
