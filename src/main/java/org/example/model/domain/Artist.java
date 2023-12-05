@@ -12,20 +12,20 @@ public class Artist implements Serializable {
     @Column(name = "name")
     private String name;
     @Column(name = "nationality")
-    private Nationality nationality;
+    private String nationality;
     @Column(name = "photo")
     private String photo;
-
+    //ONETOMANY = ALBUM
     public Artist() {
     }
 
-    public Artist(String name, Nationality nationality, String photo) {
+    public Artist(String name, String nationality, String photo) {
         this.name = name;
         this.nationality = nationality;
         this.photo = photo;
     }
 
-    public Artist(Nationality nationality, String photo) {
+    public Artist(String nationality, String photo) {
         this.nationality = nationality;
         this.photo = photo;
     }
@@ -38,11 +38,11 @@ public class Artist implements Serializable {
         this.name = name;
     }
 
-    public Nationality getNationality() {
+    public String getNationality() {
         return nationality;
     }
 
-    public void setNationality(Nationality nacionality) {
+    public void setNationality(String nacionality) {
         this.nationality = nacionality;
     }
 

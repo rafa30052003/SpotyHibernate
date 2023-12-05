@@ -26,7 +26,7 @@ public class Song implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "name_disk")
     private Album album;
-
+    //MANYTOMANY =LIST
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "song_list",
             joinColumns = {

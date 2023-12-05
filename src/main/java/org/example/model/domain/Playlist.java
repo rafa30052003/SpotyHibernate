@@ -25,6 +25,9 @@ public class Playlist {
             @JoinColumn(name = "id_song",referencedColumnName = "id")
     }
             )
+    //MANYTOMANY = USER (SUBCRIPTION)
+
+    //ONETOMANY = COMENTARIO
     private Set<Song> songs;
 
     public Playlist(int id, String description, String name_list, String name_user) {

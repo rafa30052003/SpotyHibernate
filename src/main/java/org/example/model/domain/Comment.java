@@ -28,7 +28,7 @@ public class Comment implements Serializable {
     public Comment() {
     }
 
-
+    //MANYTOONE = LISTA
     public Comment(User user, List myList, String comment) {
         this.user = user;
         this.myList = (Playlist) myList;

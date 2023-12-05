@@ -148,7 +148,7 @@ public class UserDAO implements iDAO<User, String> {
         try {
             manager.getTransaction().begin();
 
-            Query query = manager.createNativeQuery(INSERT_SUBSCRIPTION);
+            Query query = manager.createNativeQuery(INSERT_SUBSCRIPTION,User.class);
             query.setParameter("nameUser", nameUser);
             query.setParameter("idList", idList);
             query.executeUpdate();
