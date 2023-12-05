@@ -3,6 +3,7 @@ package org.example.model.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,16 +24,21 @@ public class Album  implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "name_artist")
     private Artist artist;
+
     //ONETOMANY = CANCION
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<Song> songs;
+
     public Album() {
     }
 
-    public Album(String name, String photo, Date public_time, int nrepro, Artist artist) {
+    public Album(String name, String photo, Date public_time, int nrepro, Artist artist, List<Song> songs) {
         this.name = name;
         this.photo = photo;
         this.public_time = public_time;
         this.nrepro = nrepro;
         this.artist = artist;
+        this.songs = songs;
     }
 
     public Album(String photo, Date public_time, int nrepro, Artist artist) {
@@ -82,17 +88,25 @@ public class Album  implements Serializable {
         this.artist = artist;
     }
 
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return nrepro == album.nrepro && Objects.equals(name, album.name) && Objects.equals(photo, album.photo) && Objects.equals(public_time, album.public_time) && Objects.equals(artist, album.artist);
+        return nrepro == album.nrepro && Objects.equals(name, album.name) && Objects.equals(photo, album.photo) && Objects.equals(public_time, album.public_time) && Objects.equals(artist, album.artist) && Objects.equals(songs, album.songs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, photo, public_time, nrepro, artist);
+        return Objects.hash(name, photo, public_time, nrepro, artist, songs);
     }
 
     @Override
@@ -103,6 +117,7 @@ public class Album  implements Serializable {
                 ", public_time=" + public_time +
                 ", nrepro=" + nrepro +
                 ", artist=" + artist +
+                ", songs=" + songs +
                 '}';
     }
 }
