@@ -1,6 +1,7 @@
 package org.example.model.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 @Entity
@@ -15,7 +16,8 @@ public class Artist implements Serializable {
     private String nationality;
     @Column(name = "photo")
     private String photo;
-    //ONETOMANY = ALBUM
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Album> albums;
     public Artist() {
     }
 
