@@ -29,7 +29,7 @@ public class User implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "subscripcion",
+            name = "subscription",
             joinColumns = @JoinColumn(name = "user_name"),
             inverseJoinColumns = @JoinColumn(name = "list_id")
     )

@@ -23,7 +23,7 @@ public class Album  implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "name_artist")
     private Artist artist;
-
+    //ONETOMANY = CANCION
     public Album() {
     }
 

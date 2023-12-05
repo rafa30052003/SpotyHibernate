@@ -74,7 +74,7 @@ public class ControllerAddArtist implements Initializable {
             FileInputStream inputStream = new FileInputStream(selectedFile);
             byte[] photo = new byte[inputStream.available()];
             inputStream.read(photo);
-            Artist a = new Artist(name, nationality,Arrays.toString(photo) );
+            Artist a = new Artist(name, txtNationality.getValue().toString(),Arrays.toString(photo) );
             artistDAO.save(a);
             App.setRoot("HomeAdmin");
 

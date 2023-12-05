@@ -171,7 +171,7 @@ public class ControllerAdminHome implements Initializable {
 
         nationality.setOnEditCommit(event -> {
             Artist selected = event.getRowValue();
-            selected.setNationality(event.getNewValue());
+            selected.setNationality(event.getNewValue().toString());
             adao.save(selected);
         });
         myartists.setEditable(true);
