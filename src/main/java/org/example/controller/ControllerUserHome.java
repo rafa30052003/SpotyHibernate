@@ -525,11 +525,10 @@ public class ControllerUserHome {
         columnn_Publication_dateAlbun.setCellValueFactory(new PropertyValueFactory<>("public_time"));
         columnn_N_reproduction.setCellValueFactory(new PropertyValueFactory<>("nrepro"));
         columnn_Albun_NameArtistAlbun.setCellValueFactory(data -> {
-            Set<Artist> artists = data.getValue().getArtists();
-            String artistNames = artists.stream().map(Artist::getName).collect(Collectors.joining(", "));
-            return new SimpleStringProperty(artistNames);
+            Artist artist = data.getValue().getArtist();
+            String artistName = (artist != null) ? artist.getName() : "";
+            return new SimpleStringProperty(artistName);
         });
-
 
 
         // Obtén los datos de álbumes desde la base de datos
