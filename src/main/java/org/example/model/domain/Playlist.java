@@ -1,9 +1,10 @@
 package org.example.model.domain;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 @Entity
-@Table(name = "STUDENT_TBL")
+@Table(name = "Playlist")
 
 public class Playlist {
     @Id
@@ -25,10 +26,22 @@ public class Playlist {
             @JoinColumn(name = "id_song",referencedColumnName = "id")
     }
             )
-    //MANYTOMANY = USER (SUBCRIPTION)
-
-    //ONETOMANY = COMENTARIO
     private Set<Song> songs;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "subscription",
+            joinColumns = {
+                    @JoinColumn(name = "id_list", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "name_user",referencedColumnName = "name")
+            }
+    )
+    //MANYTOMANY = USER (SUBCRIPTION)
+    private Set<User> users;
+    //ONETOMANY = COMENTARIO
+    @OneToMany(mappedBy = "PlayList", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public Playlist(int id, String description, String name_list, String name_user) {
         this.id = id;

@@ -1,6 +1,7 @@
 package org.example.model.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
@@ -144,5 +145,16 @@ public class Song implements Serializable {
                 ", album=" + album +
                 ", archive_song='" + archive_song + '\'' +
                 '}';
+    }
+
+    @ManyToMany(mappedBy = "songs")
+    private Collection<Playlist> playlists;
+
+    public Collection<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Collection<Playlist> playlists) {
+        this.playlists = playlists;
     }
 }
