@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="344.0" style="-fx-background-color: #4282a6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerModList">
+<AnchorPane prefHeight="400.0" prefWidth="344.0" style="-fx-background-color: #265599;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerModList">
    <children>
       <Text fill="WHITE" layoutX="81.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Modifica tu Lista">
          <font>

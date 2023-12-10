@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAddSong">
+<BorderPane prefHeight="834.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAddSong">
     <top>
-        <AnchorPane prefHeight="140.0" prefWidth="396.0" style="-fx-background-color: #4282a6;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="140.0" prefWidth="396.0" style="-fx-background-color: #000e25;" BorderPane.alignment="CENTER">
             <children>
-                <Text fill="WHITE" layoutX="172.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NUEVA CANCIÓN" textAlignment="CENTER" wrappingWidth="255.73676300048828">
+                <Text fill="WHITE" layoutX="343.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NUEVA CANCIÓN" textAlignment="CENTER" wrappingWidth="472.7367630004883">
                     <font>
                         <Font name="System Bold Italic" size="36.0" />
                     </font></Text>
@@ -22,45 +22,45 @@
     <center>
         <AnchorPane prefHeight="282.0" prefWidth="600.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="txtname" layoutX="135.0" layoutY="21.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
-                <Label layoutX="29.0" layoutY="35.0" text="NOMBRE" textFill="#265599">
+                <TextField fx:id="txtname" layoutX="333.0" layoutY="90.0" prefHeight="27.0" prefWidth="227.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
+                <Label layoutX="334.0" layoutY="34.0" text="NOMBRE" textFill="#265599">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font></Label>
-                <Label layoutX="434.0" layoutY="91.0" text="CANCION" textFill="#265599">
+                <Label layoutX="684.0" layoutY="302.0" text="CANCION" textFill="#265599">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font></Label>
-                <Button layoutX="135.0" layoutY="203.0" mnemonicParsing="false" onAction="#addSong" prefHeight="42.0" prefWidth="319.0" style="-fx-background-color: #4282a6;" text="GUARDAR" textFill="#fcfcfc">
+                <Button layoutX="420.0" layoutY="486.0" mnemonicParsing="false" onAction="#addSong" prefHeight="42.0" prefWidth="319.0" style="-fx-background-color: #000e25;" text="GUARDAR" textFill="#fcfcfc">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font>
                 </Button>
-                <Button layoutX="398.0" layoutY="130.0" mnemonicParsing="false" onAction="#chooseAudioFile" prefHeight="26.0" prefWidth="146.0" text="Seleccione el archivo" />
-            <Label layoutX="29.0" layoutY="78.0" prefHeight="26.0" prefWidth="66.0" text="GENERO" textFill="#265599">
+                <Button layoutX="684.0" layoutY="373.0" mnemonicParsing="false" onAction="#chooseAudioFile" prefHeight="26.0" prefWidth="237.0" text="Seleccione el archivo" />
+            <Label layoutX="651.0" layoutY="34.0" prefHeight="26.0" prefWidth="66.0" text="GENERO" textFill="#265599">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="20.0" layoutY="123.0" text="DURACION" textFill="#265599">
+            <Label layoutX="334.0" layoutY="165.0" text="DURACION" textFill="#265599">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="443.0" layoutY="22.0" text="ALBUM" textFill="#265599">
+            <Label layoutX="688.0" layoutY="165.0" text="ALBUM" textFill="#265599">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="txtgender" layoutX="135.0" layoutY="67.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
-            <TextField fx:id="txtduration" layoutX="135.0" layoutY="116.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
-            <ComboBox fx:id="txtalbum" layoutX="396.0" layoutY="54.0" prefWidth="150.0" style="-fx-background-color: white; -fx-border-color: #1DB954FF; -fx-border-style: hidden hidden solid hidden;" />
-            <Label layoutX="20.0" layoutY="166.0" text="REPRODUCCIONES" textFill="#265599">
+            <TextField fx:id="txtgender" layoutX="663.0" layoutY="90.0" prefHeight="27.0" prefWidth="233.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
+            <TextField fx:id="txtduration" layoutX="332.0" layoutY="237.0" prefHeight="27.0" prefWidth="242.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
+            <ComboBox fx:id="txtalbum" layoutX="684.0" layoutY="237.0" prefHeight="27.0" prefWidth="229.0" style="-fx-background-color: white; -fx-border-color: #1DB954FF; -fx-border-style: hidden hidden solid hidden;" />
+            <Label layoutX="331.0" layoutY="302.0" text="REPRODUCCIONES" textFill="#265599">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="txtrepro" layoutX="181.0" layoutY="165.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
+            <TextField fx:id="txtrepro" layoutX="340.0" layoutY="372.0" prefHeight="27.0" prefWidth="243.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
             </children>
         </AnchorPane>
     </center>

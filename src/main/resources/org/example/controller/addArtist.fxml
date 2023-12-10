@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAddArtist">
+<BorderPane prefHeight="834.0" prefWidth="1159.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerAddArtist">
     <top>
-        <AnchorPane prefHeight="140.0" prefWidth="396.0" style="-fx-background-color: #4282a6;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="140.0" prefWidth="396.0" style="-fx-background-color: #000e25;" BorderPane.alignment="CENTER">
             <children>
-                <Text fill="WHITE" layoutX="172.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NUEVO ARTISTA" textAlignment="CENTER" wrappingWidth="255.73676300048828">
+                <Text fill="WHITE" layoutX="305.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NUEVO ARTISTA" textAlignment="CENTER" wrappingWidth="467.7367630004883">
                     <font>
                         <Font name="System Bold Italic" size="36.0" />
                     </font></Text>
@@ -23,31 +23,30 @@
     <center>
         <AnchorPane prefHeight="372.0" prefWidth="388.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="txtName" layoutX="219.0" layoutY="21.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
-                <Label layoutX="76.0" layoutY="22.0" text="NOMBRE" textFill="#265599">
+                <TextField fx:id="txtName" layoutX="468.0" layoutY="149.0" prefHeight="27.0" prefWidth="231.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
+                <Label layoutX="321.0" layoutY="150.0" prefHeight="34.0" prefWidth="80.0" text="NOMBRE" textFill="#265599">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font></Label>
-                <Label layoutX="89.0" layoutY="75.0" text="FOTO" textFill="#265599">
+                <Label layoutX="348.0" layoutY="239.0" text="FOTO" textFill="#265599">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font></Label>
-                <Label layoutX="69.0" layoutY="148.0" text="NACIONALIDAD" textFill="#265599">
+                <Label layoutX="286.0" layoutY="334.0" text="NACIONALIDAD" textFill="#265599">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font></Label>
-                <Button layoutX="135.0" layoutY="203.0" mnemonicParsing="false" onAction="#addArtist" prefHeight="42.0" prefWidth="319.0" style="-fx-background-color: #4282a6;" text="GUARDAR" textFill="#fcfcfc">
+                <Button layoutX="391.0" layoutY="428.0" mnemonicParsing="false" onAction="#addArtist" prefHeight="42.0" prefWidth="319.0" style="-fx-background-color: #000e25;" text="GUARDAR" textFill="#fcfcfc">
                     <font>
                         <Font name="System Bold Italic" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="foto" layoutX="226.0" layoutY="75.0" mnemonicParsing="false" onAction="#elegirFoto" prefHeight="26.0" prefWidth="146.0" text="Seleccione el archivo" />
-                <Pane layoutX="408.0" layoutY="35.0" prefHeight="141.0" prefWidth="163.0">
-                    <children>
-                        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true" />
-                    </children>
-                </Pane>
-            <ComboBox fx:id="txtNationality" layoutX="224.0" layoutY="147.0" prefWidth="150.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
+                <Button fx:id="foto" layoutX="480.0" layoutY="239.0" mnemonicParsing="false" onAction="#elegirFoto" prefHeight="26.0" prefWidth="217.0" text="Seleccione el archivo" />
+                <Pane layoutX="789.0" layoutY="137.0" prefHeight="177.0" prefWidth="246.0">
+               <children>
+                        <ImageView fx:id="imageView" fitHeight="186.0" fitWidth="247.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+               </children></Pane>
+            <ComboBox fx:id="txtNationality" layoutX="465.0" layoutY="333.0" prefHeight="27.0" prefWidth="244.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #1DB954FF; -fx-background-color: white;" />
             </children>
         </AnchorPane>
     </center>

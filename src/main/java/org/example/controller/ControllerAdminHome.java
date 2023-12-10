@@ -34,9 +34,6 @@ import java.util.logging.Logger;
 
 public class ControllerAdminHome implements Initializable {
 
-    /**
-     * SIDEBAR
-     */
 
     @FXML
     private BorderPane bp;

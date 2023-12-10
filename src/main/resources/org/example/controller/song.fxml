@@ -5,16 +5,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="834.0" prefWidth="863.0" style="-fx-background-color: #4282a6;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerSong">
+<AnchorPane prefHeight="834.0" prefWidth="863.0" style="-fx-background-color: #000e25;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ControllerSong">
    <children>
-      <TableView fx:id="mysongs" layoutX="61.0" layoutY="118.0" prefHeight="580.0" prefWidth="742.0" style="-fx-background-color: white; -fx-border-color: white; -fx-text-fill: white;">
+      <TableView fx:id="mysongs" layoutX="61.0" layoutY="118.0" prefHeight="580.0" prefWidth="742.0" style="-fx-background-color: #6a9ce4; -fx-border-color: white; -fx-text-fill: white;">
          <columns>
-            <TableColumn fx:id="id" prefWidth="59.46660232543945" style="-fx-background-color: white; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: #020113;" text="ID" />
-            <TableColumn fx:id="name" prefWidth="105.06664276123047" style="-fx-background-color: white;" text="NOMBRE" />
-            <TableColumn fx:id="duration" prefWidth="96.800048828125" style="-fx-background-color: white;" text="DURACION" />
-            <TableColumn fx:id="gender" prefWidth="128.79995727539062" style="-fx-background-color: white; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: #020113;" text="GENERO" />
-            <TableColumn fx:id="repro" prefWidth="169.066650390625" style="-fx-background-color: white; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: white;" text="REPRODUCCIONES" />
-            <TableColumn fx:id="album" prefWidth="190.13330078125" style="-fx-background-color: white; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: #020113;" text="ALBUM" />
+            <TableColumn fx:id="id" prefWidth="59.46660232543945" style="-fx-background-color: #6a9ce4; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: #020113;" text="ID" />
+            <TableColumn fx:id="name" prefWidth="105.06664276123047" style="-fx-background-color: #6a9ce4;" text="NOMBRE" />
+            <TableColumn fx:id="duration" prefWidth="96.800048828125" style="-fx-background-color: #6a9ce4;" text="DURACION" />
+            <TableColumn fx:id="gender" prefWidth="128.79995727539062" style="-fx-background-color: #6a9ce4; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: #020113;" text="GENERO" />
+            <TableColumn fx:id="repro" prefWidth="169.066650390625" style="-fx-background-color: #6a9ce4; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: white;" text="REPRODUCCIONES" />
+            <TableColumn fx:id="album" prefWidth="190.13330078125" style="-fx-background-color: #6a9ce4; -fx-border-width: 0px 0px 0px 0px; -fx-border-color: #020113;" text="ALBUM" />
          </columns>
       </TableView>
       <Button layoutX="56.0" layoutY="731.0" mnemonicParsing="false" onAction="#switchToAddSong" prefHeight="42.0" prefWidth="306.0" style="-fx-background-color: #6a9ce4;" text="INSERTAR" textFill="#fcfcfc">

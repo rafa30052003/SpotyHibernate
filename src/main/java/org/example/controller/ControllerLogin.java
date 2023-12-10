@@ -67,7 +67,7 @@ public class ControllerLogin {
             loggedInUserMail = user.getMail();
             loggedInUserPhoto = user.getPhoto();
             loggedInUserPassword = user.getPassword(); // Aquí puedes almacenar la contraseña hasheada si la necesitas
-            App.setRoot("homeAdmin");
+            App.setRoot("homeUser");
         } else {
             // Si no se encontró un usuario con el nombre y contraseña correctos, muestra un mensaje de error
             Alert alert = new Alert(Alert.AlertType.ERROR);

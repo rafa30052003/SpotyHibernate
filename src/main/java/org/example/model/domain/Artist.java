@@ -16,8 +16,9 @@ public class Artist implements Serializable {
     private String nationality;
     @Column(name = "photo")
     private String photo;
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Album> albums;
+
     public Artist() {
     }
 

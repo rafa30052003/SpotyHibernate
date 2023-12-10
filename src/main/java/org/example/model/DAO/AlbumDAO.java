@@ -3,16 +3,12 @@ package org.example.model.DAO;
 import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
 import org.example.model.domain.Album;
-import org.example.model.domain.Artist;
+
 import org.example.model.domain.Song;
-
-
 import javax.persistence.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 
 public class AlbumDAO implements iDAO <Album,String> {
 
@@ -221,24 +217,45 @@ public class AlbumDAO implements iDAO <Album,String> {
         return names;
     }
 
-    //QUEDA POR CAMBIAR
-    public void updateAlbum(String newName, Date newPublicationDate, Artist newNameArtist, String name) {
-        try {
-            EntityTransaction transaction = manager.getTransaction();
-            transaction.begin();
+    public Album updateAlbum(Album updatedAlbum) {
+        Album result = null;
 
-            Album albumToUpdate = manager.find(Album.class, name);
-            if (albumToUpdate != null) {
-                albumToUpdate.setName(newName);
-                albumToUpdate.setPublicTime(newPublicationDate);
-                albumToUpdate.setName(String.valueOf(newNameArtist));
-                manager.merge(albumToUpdate);
+        if (updatedAlbum != null) {
+            EntityManager entityManager = null;
+
+            try {
+                entityManager = Connection.getConnect().createEntityManager();
+                entityManager.getTransaction().begin();
+
+                Album albumToUpdate = entityManager.find(Album.class, updatedAlbum.getName());
+                if (albumToUpdate != null) {
+                    // UPDATE
+                    albumToUpdate.setName(updatedAlbum.getName());
+                    albumToUpdate.setPublicTime(updatedAlbum.getPublicTime());
+                    albumToUpdate.setArtist(updatedAlbum.getArtist());
+
+                    albumToUpdate = entityManager.merge(albumToUpdate);
+                    result = albumToUpdate;
+                }
+
+                entityManager.getTransaction().commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                if (entityManager != null && entityManager.getTransaction().isActive()) {
+                    entityManager.getTransaction().rollback();
+                }
+            } finally {
+                if (entityManager != null) {
+                    entityManager.close();
+                }
             }
-
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        return result;
     }
+    
+
+
 
 }

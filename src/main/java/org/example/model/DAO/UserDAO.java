@@ -135,11 +135,7 @@ public class UserDAO implements iDAO<User, String> {
         }
     }
 
-    /*public User findUserByName(String name) {
-        Query query = manager.createQuery(FIND_USER_BY_NAME, User.class);
-        query.setParameter("name", name);
-        return (User) query.getSingleResult();
-    }*/
+
 
 
     public User findUserByName(String name) {
@@ -221,14 +217,7 @@ public class UserDAO implements iDAO<User, String> {
             System.out.println("Error al eliminar la suscripción");
         }
     }
-   /* public User findUserByNameAndPassword(String name, String password) {
-        Query query = manager.createQuery(FIND_USER_BY_NAME_AND_PASSWORD, User.class);
-        query.setParameter("name", name);
-        query.setParameter("password", password);
-        return (User) query.getSingleResult();
-    }
 
-    */
    public User findUserByNameAndPassword(String name, String password) {
        try {
            Query query = manager.createQuery(FIND_USER_BY_NAME_AND_PASSWORD, User.class);
@@ -249,11 +238,7 @@ public class UserDAO implements iDAO<User, String> {
 
      */
 
-   /* public boolean isAdmin(String name) {
-        Query query = manager.createQuery(FINDBYNAME_ADMIN, User.class);
-        query.setParameter("name", name);
-        return !query.getResultList().isEmpty();
-    }*/
+
     public boolean isAdmin(String name) {
         try {
             Query query = manager.createQuery("SELECT a FROM Admin a WHERE a.name = :name");

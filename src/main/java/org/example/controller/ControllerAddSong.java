@@ -49,13 +49,6 @@ public class ControllerAddSong implements Initializable {
         String album = txtalbum.getValue();
         int repro = Integer.parseInt(txtrepro.getText());
 
-        if (name.isEmpty() ||  gender.isEmpty() || duration.isEmpty() || album.isEmpty()) {
-            /*Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Campos Incompletos");
-            alert.setHeaderText("Por favor complete todos los campos.");
-            alert.showAndWait();*/
-            return;
-        }
         try {
             Album albumObject = new Album();
             Song s = new Song();

@@ -77,21 +77,9 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
      * funcion para guardar la list en la base de datos
      * @param entity
      * @return
-     * @throws SQLException
+     * @throws
      */
-   /* @Override
-    public Playlist save(Playlist entity) throws SQLException {
-        if (entity != null) {
-            Query query = manager.createNativeQuery(INSERT);
-            query.setParameter("id", entity.getId());
-            query.setParameter("name_list", entity.getName_list());
-            query.setParameter("description", entity.getDescription());
-            query.setParameter("name_user", entity.getName_user());
-            query.executeUpdate();
 
-        }
-        return entity;
-    }*/
     @Override
     public Playlist save(Playlist entity) {
         Playlist result = null;
@@ -303,12 +291,6 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
         List<Song> songs = new ArrayList<>();
 
                     Song song = new Song();
-                 /*   song.setDuration(rs.getString("duration"));
-                    // También necesitarás establecer el álbum al que pertenece esta canción aquí
-                    Album album = new Album();
-                    album.setName(rs.getString("name_disk"));
-                    song.setAlbum(album);
-                    songs.add(song);*/
                     return songs;
     }
 
@@ -320,20 +302,7 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
      * @throws SQLException
      */
     public void deleteSongOfList(int songId, int listId) throws SQLException {
-        /*try (PreparedStatement pst = conn.prepareStatement(DELETESongofList)) {
-            pst.setInt(1, songId);
-            pst.setInt(2, listId);
 
-            // Ejecutar la consulta de eliminación
-            int rowsAffected = pst.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("La canción se eliminó correctamente de la lista.");
-            } else {
-                System.out.println("No se encontró la relación entre la canción y la lista.");
-                // Puedes manejar este caso según tus necesidades
-            }
-        }*/
     }
 
 
