@@ -577,7 +577,7 @@ public class ControllerUserHome {
             Album selectedAlbum = tableAlbun.getSelectionModel().getSelectedItem();
             if (selectedAlbum != null) {
                 // Incrementa el contador de reproducciones del álbum en 1
-                selectedAlbum.setNrepro(selectedAlbum.getNrepro() + 1);
+                selectedAlbum.setnReproduction(selectedAlbum.getnReproduction() + 1);
 
                 // Actualiza la tabla de álbumes reflejando los cambios en la interfaz gráfica
                 tableAlbun.refresh(); // Actualiza la tabla

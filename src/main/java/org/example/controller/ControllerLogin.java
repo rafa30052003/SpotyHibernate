@@ -39,7 +39,7 @@ public class ControllerLogin {
         login();
     }
 
-    @FXML
+    /*@FXML
     private void login() throws IOException, SQLException {
         String username = textName.getText();
         String password = textPassword.getText();
@@ -70,7 +70,43 @@ public class ControllerLogin {
             alert.setContentText("Usuario o contraseña incorrectos");
             alert.showAndWait();
         }
+    }*/
+    @FXML
+    private void login() throws IOException, SQLException {
+        String username = textName.getText();
+        String password = textPassword.getText();
+
+        UserDAO userDAO = new UserDAO();
+
+        // Busca al usuario en la tabla user
+        User user = userDAO.findUserByName(username);
+
+        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            if (userDAO.isAdmin(username)) {
+                // La contraseña coincide y es un administrador
+                loggedInUserName = user.getName();
+                loggedInUserMail = user.getMail();
+                loggedInUserPhoto = user.getPhoto();
+                loggedInUserPassword = user.getPassword(); // Aquí puedes almacenar la contraseña hasheada si la necesitas
+                App.setRoot("homeAdmin");
+            } else {
+                // La contraseña coincide y no es un administrador
+                loggedInUserName = user.getName();
+                loggedInUserMail = user.getMail();
+                loggedInUserPhoto = user.getPhoto();
+                loggedInUserPassword = user.getPassword(); // Aquí puedes almacenar la contraseña hasheada si la necesitas
+                App.setRoot("homeUser");
+            }
+        } else {
+            // Si no se encontró un usuario con el nombre y contraseña correctos, muestra un mensaje de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de acceso");
+            alert.setHeaderText(null);
+            alert.setContentText("Usuario o contraseña incorrectos");
+            alert.showAndWait();
+        }
     }
+
 
     // Métodos para acceder a los campos del usuario logueado desde otras clases
     public static String getLoggedInUserName() {

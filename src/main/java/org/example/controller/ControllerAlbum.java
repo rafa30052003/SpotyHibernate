@@ -56,19 +56,24 @@ public class ControllerAlbum {
     @FXML
     private TextField buscar;
 
-    private AlbumDAO albumDAO;
+    private AlbumDAO albumDAO; // Asegúrate de inicializar este objeto correctamente
+
+    public void setAlbumDAO(AlbumDAO albumDAO) {
+        this.albumDAO = albumDAO;
+    }
 
 
     @FXML
     public void initialize()  {
+        observableAlbumList = FXCollections.observableArrayList();
+        this.albumDAO = new AlbumDAO();
         columNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        columFecha.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPublic_time()).asString());
-        columRepro.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNrepro()).asObject());
+        columFecha.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPublicTime()).asString());
+        columRepro.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getnReproduction()).asObject());
         columArt.setCellValueFactory(cellData -> {
             Artist artist = cellData.getValue().getArtist();
             return new SimpleStringProperty(artist != null ? artist.getName() : "");
         });
-
         List<Album> albumList = albumDAO.findAll();
         ObservableList<Album> observableAlbumList = FXCollections.observableArrayList(albumList);
         tableView.setItems(observableAlbumList);
@@ -92,10 +97,10 @@ public class ControllerAlbum {
                 if (album.getName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
-                if (album.getPublic_time().toString().toLowerCase().contains(lowerCaseFilter)) {
+                if (album.getPublicTime().toString().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
-                if (String.valueOf(album.getNrepro()).toLowerCase().contains(lowerCaseFilter)) {
+                if (String.valueOf(album.getnReproduction()).toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
               /*  for (Artist artist : album.getArtist) {
@@ -194,25 +199,25 @@ public class ControllerAlbum {
     }
 
 
-   @FXML
+    @FXML
     void buscarNombre(ActionEvent event) throws SQLException {
         String letra = buscar.getText();
         filtrarAlbumesPorNombre(letra);
     }
-        private void filtrarAlbumesPorNombre(String letra) throws SQLException {
-            List<Album> albumesFiltrados = albumDAO.findByName(letra);
+    private void filtrarAlbumesPorNombre(String letra) throws SQLException {
+        List<Album> albumesFiltrados = albumDAO.findByName(letra);
 
-            if (!albumesFiltrados.isEmpty()) {
-                ObservableList<Album> listaObservableAlbumes = FXCollections.observableArrayList(albumesFiltrados);
-                tableView.setItems(listaObservableAlbumes);
-            } else {
-                tableView.setItems(FXCollections.emptyObservableList());
-            }
+        if (!albumesFiltrados.isEmpty()) {
+            ObservableList<Album> listaObservableAlbumes = FXCollections.observableArrayList(albumesFiltrados);
+            tableView.setItems(listaObservableAlbumes);
+        } else {
+            tableView.setItems(FXCollections.emptyObservableList());
+        }
     }
 
 
     @FXML
     void btninsertar(ActionEvent event) throws  IOException {
-            App.setRoot("addAlbum");
-        }
+        App.setRoot("addAlbum");
     }
+}

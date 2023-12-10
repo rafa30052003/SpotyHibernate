@@ -12,7 +12,7 @@ public class Connection {
     private Connection() {
         emf = Persistence.createEntityManagerFactory("aplicacion");
         if(emf==null) {
-            Loggers.LogsSevere("No se puede establecer la conexion");
+           // Loggers.LogsSevere("No se puede establecer la conexion");
         }
     }
     public static EntityManagerFactory getConnect() {
