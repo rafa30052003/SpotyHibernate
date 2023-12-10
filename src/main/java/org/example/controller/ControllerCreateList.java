@@ -41,17 +41,9 @@ public class ControllerCreateList {
             alert.setContentText("lista creda");
             alert.showAndWait();
 
-            // Limpia los campos de texto después de agregar el usuario
 
         }
 
-        /*
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de base de datos");
-            alert.setHeaderText(null);
-            alert.setContentText("No se pudo crear la lista en la base de datos.");
-            alert.showAndWait();
-*/
 
 
     }

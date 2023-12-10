@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -523,7 +524,7 @@ public class ControllerUserHome {
 
         columnnName_Albun.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnn_Publication_dateAlbun.setCellValueFactory(new PropertyValueFactory<>("publicTime"));
-        columnn_N_reproduction.setCellValueFactory(new PropertyValueFactory<>("n_reproduction"));
+        columnn_N_reproduction.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getnReproduction()).asObject());
         columnn_Albun_NameArtistAlbun.setCellValueFactory(data -> {
             Artist artist = data.getValue().getArtist();
             String artistName = (artist != null) ? artist.getName() : "";

@@ -56,7 +56,7 @@ public class ControllerAlbum {
     @FXML
     private TextField buscar;
 
-    private AlbumDAO albumDAO; // Asegúrate de inicializar este objeto correctamente
+    private AlbumDAO albumDAO;
 
     public void setAlbumDAO(AlbumDAO albumDAO) {
         this.albumDAO = albumDAO;
@@ -103,11 +103,7 @@ public class ControllerAlbum {
                 if (String.valueOf(album.getnReproduction()).toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 }
-              /*  for (Artist artist : album.getArtist) {
-                    if (artist.getName().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                }*/
+
 
                 return false;
             });
@@ -179,7 +175,14 @@ public class ControllerAlbum {
                         Artist newArtist = new Artist();
                         newArtist.setName(newArtistName);
 
-                        albumDAO.updateAlbum(newName, Date.valueOf(newPublicationDate), newArtist, selectedAlbum.getName());
+                        Album updatedAlbum = new Album();
+                        updatedAlbum.setName(newName);
+                        updatedAlbum.setPublicTime(Date.valueOf(newPublicationDate));
+                        updatedAlbum.setArtist(newArtist);
+
+
+                        AlbumDAO albumDAO = new AlbumDAO();
+                        Album result = albumDAO.updateAlbum(updatedAlbum);
 
                         List<Album> updatedAlbums = albumDAO.findAll();
                         ObservableList<Album> observableAlbumList = FXCollections.observableArrayList(updatedAlbums);

@@ -7,8 +7,6 @@ import org.example.model.domain.Nationality;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,16 +85,23 @@ public class ArtistDAO extends Artist implements iDAO<Artist,String> {
             try {
                 manager.getTransaction().begin();
 
-                if (!manager.contains(entity)) {
-                    // INSERT
-                    manager.persist(entity);
+                // Buscar el artista por su nombre
+                Artist existingArtist = manager.find(Artist.class, entity.getName());
+
+                if (existingArtist != null) {
+                    // El artista existe, se modifica con los nuevos valores proporcionados
+                    existingArtist.setNationality(entity.getNationality());
+                    existingArtist.setPhoto(entity.getPhoto());
+                    // Puedes actualizar otros atributos aquí según sea necesario
+
+                    result = manager.merge(existingArtist); // Actualizar el artista existente en la base de datos
                 } else {
-                    // UPDATE
-                    entity = manager.merge(entity);
+                    // El artista no existe, se crea uno nuevo
+                    manager.persist(entity); // Insertar un nuevo artista en la base de datos
+                    result = entity; // Establecer el resultado como el nuevo artista creado
                 }
 
                 manager.getTransaction().commit();
-                result = entity;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -111,6 +116,8 @@ public class ArtistDAO extends Artist implements iDAO<Artist,String> {
 
         return result;
     }
+
+
 
     /**
      * Metodo que elimina el artista
