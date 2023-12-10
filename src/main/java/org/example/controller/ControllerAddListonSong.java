@@ -44,7 +44,7 @@ public class ControllerAddListonSong implements Initializable {
         // Inicializa el ListDAO
         listDAO = new ListDAO();
 
-        try {
+
             // Llama a tu DAO para obtener todas las listas en la base de datos
             List<String> allLists = listDAO.findAllNameLists();
 
@@ -56,21 +56,14 @@ public class ControllerAddListonSong implements Initializable {
 
             // Configura la selección de lista por defecto
             listMyList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                try {
+
                     int listId = listDAO.findIdByName(newValue);
                     selectedListId = listId;
                     System.out.println("ID de la lista seleccionada: " + selectedListId);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // Handle database errors
-                }
+
             });
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejar errores de base de datos
-            // Aquí podrías mostrar un mensaje de error al usuario si es necesario
-        }
+
     }
 
     /**

@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import org.example.model.DAO.ListDAO;
 import org.example.model.domain.Playlist;
 
-import java.sql.SQLException;
 
 public class ControllerCreateList {
     @FXML
@@ -27,7 +26,7 @@ public class ControllerCreateList {
      */
     @FXML
     public void addList() {
-        try {
+
             Playlist lists=new Playlist();
             ListDAO listDAO=new ListDAO();
             String name = nameList.getText();
@@ -44,18 +43,18 @@ public class ControllerCreateList {
 
             // Limpia los campos de texto después de agregar el usuario
 
-        } catch (SQLException e) {
+        }
+
+        /*
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error de base de datos");
             alert.setHeaderText(null);
             alert.setContentText("No se pudo crear la lista en la base de datos.");
             alert.showAndWait();
-            e.printStackTrace();
+*/
 
 
-        }
     }
-}
 
 
 

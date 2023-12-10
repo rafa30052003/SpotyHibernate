@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.example.conexion.Connection;
 import org.example.interfaceDAO.iDAO;
+import org.example.model.domain.Album;
 import org.example.model.domain.Song;
 import org.example.model.domain.Playlist;
 
@@ -34,12 +35,31 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
 
     private EntityManager manager;
 
-    public List<String> findAllNameLists() throws SQLException {
-        manager = Connection.getConnect().createEntityManager();
+    public List<String> findAllNameLists() {
+        EntityManager manager = null;
         List<String> nameLists = new ArrayList<>();
-        Query query = manager.createQuery("SELECT u FROM Playlist u", Playlist.class);
-        query.executeUpdate();
-        return query.getResultList();
+
+        try {
+            manager = Connection.getConnect().createEntityManager();
+            manager.getTransaction().begin();
+
+            Query query = manager.createQuery("SELECT u.name_list FROM Playlist u", String.class);
+            nameLists = query.getResultList();
+
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (manager != null && manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
+
+        return nameLists;
     }
 
 
@@ -59,7 +79,7 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
      * @return
      * @throws SQLException
      */
-    @Override
+   /* @Override
     public Playlist save(Playlist entity) throws SQLException {
         if (entity != null) {
             Query query = manager.createNativeQuery(INSERT);
@@ -71,6 +91,41 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
 
         }
         return entity;
+    }*/
+    @Override
+    public Playlist save(Playlist entity) {
+        Playlist result = null;
+
+        if (entity != null) {
+            manager = Connection.getConnect().createEntityManager();
+
+            try {
+                manager.getTransaction().begin();
+
+                if (!manager.contains(entity)) {
+                    // INSERT
+                    manager.persist(entity);
+                } else {
+                    // UPDATE
+                    entity = manager.merge(entity);
+                }
+
+
+                manager.getTransaction().commit();
+                result = entity;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                if (manager.getTransaction().isActive()) {
+                    manager.getTransaction().rollback();
+                }
+            } finally {
+                manager.close();
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -78,39 +133,105 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
 
     }
 
+
     /**
      * funcion para borrar las listas
      * @param id
      * @throws SQLException
      */
-    public void delete(int id) throws SQLException {
-        manager = Connection.getConnect().createEntityManager();
-        manager.getTransaction().begin();
-        String Hola = "hola";
-        Query query = manager.createNativeQuery("DELETE FROM list WHERE id = VALUE (:idList)",List.class);
-        query.setParameter("idList", id);
-        query.executeUpdate();
+    public void delete(int id) {
+        EntityManager manager = null;
+
+        try {
+            manager = Connection.getConnect().createEntityManager();
+            manager.getTransaction().begin();
+
+            Playlist playlistToDelete = manager.find(Playlist.class, id);
+            if (playlistToDelete != null) {
+                manager.remove(playlistToDelete);
+                manager.getTransaction().commit();
+                System.out.println("Playlist eliminada correctamente");
+            } else {
+                System.out.println("No se encontró la Playlist con el ID: " + id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (manager != null && manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
     }
 
-    public List<String> findAllNameListsByUser(String loggedInUserName) throws SQLException {
 
-        String querys = "SELECT name_list FROM list WHERE name_user = VALUE (:loggedUser)";
-        Query query = manager.createNativeQuery(querys);
-        query.setParameter("loggedUser", loggedInUserName);
-        List<String> nameLists = query.getResultList();
-        query.executeUpdate();
+    public List<String> findAllNameListsByUser(String loggedInUserName) {
+        EntityManager manager = null;
+        List<String> nameLists = new ArrayList<>();
+
+        try {
+            manager = Connection.getConnect().createEntityManager();
+            manager.getTransaction().begin();
+
+            String querys = "SELECT name_list FROM list WHERE name_user = :loggedUser";
+            Query query = manager.createNativeQuery(querys);
+            query.setParameter("loggedUser", loggedInUserName);
+
+            nameLists = query.getResultList();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (manager != null && manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
+
         return nameLists;
     }
 
 
-    public int findIdByName(String listName) throws SQLException {
+    public int findIdByName(String listName) {
+        EntityManager manager = null;
         int listId = -1; // Valor predeterminado si no se encuentra la lista
 
-        String idbyname = "SELECT id FROM list WHERE name_list = VALUE (:Name)";
-        Query query = manager.createNativeQuery(idbyname);
-        query.setParameter("Name", listName);
-        query.executeUpdate();
-        int id = query.getFirstResult();
+        try {
+            manager = Connection.getConnect().createEntityManager();
+            manager.getTransaction().begin();
+
+            String idByNameQuery = "SELECT id FROM list WHERE name_list = :Name";
+            Query query = manager.createNativeQuery(idByNameQuery);
+            query.setParameter("Name", listName);
+
+            List<?> resultList = query.getResultList();
+            if (!resultList.isEmpty()) {
+                // Si hay resultados, obtén el primer elemento de la lista
+                listId = (int) resultList.get(0);
+            }
+
+            manager.getTransaction().commit();
+        } catch (NoResultException e) {
+            // Manejar el caso en el que no se encuentre ningún resultado
+            e.printStackTrace();
+        } catch (Exception e) {
+            // Manejar otras excepciones
+            e.printStackTrace();
+
+            if (manager != null && manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
 
         return listId;
     }
@@ -133,13 +254,32 @@ public class ListDAO extends Playlist implements iDAO<Playlist, Integer> {
     }
 
 
-    public List<String> findSubscribedLists(String userName) throws SQLException {
+    public List<String> findSubscribedLists(String userName) {
+        EntityManager manager = null;
         List<String> subscribedLists = new ArrayList<>();
-        String FindySublists = "SELECT l.name_list FROM list l JOIN subscription s ON l.id = s.id_list WHERE s.name_user  = value(:userName)";
-        Query query = manager.createNativeQuery(FindySublists);
-        query.setParameter("userName", userName);
-        query.executeUpdate();
-        subscribedLists = query.getResultList();
+
+        try {
+            manager = Connection.getConnect().createEntityManager();
+            manager.getTransaction().begin();
+
+            String FindySublists = "SELECT l.name_list FROM list l JOIN subscription s ON l.id = s.id_list WHERE s.name_user = :userName";
+            Query query = manager.createNativeQuery(FindySublists);
+            query.setParameter("userName", userName);
+
+            subscribedLists = query.getResultList();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (manager != null && manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
+        }
+
         return subscribedLists;
     }
 
