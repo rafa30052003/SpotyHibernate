@@ -23,7 +23,7 @@ public class ControllerCreateList {
     private static String loggedInUserName = HomeLogin.getLoggedInUserName();
 
     /**
-     * funcion para crear una listas en la base de datos 
+     * funcion para crear una listas en la base de datos
      */
     @FXML
     public void addList() {
@@ -56,5 +56,6 @@ public class ControllerCreateList {
         }
     }
 }
+
 
 

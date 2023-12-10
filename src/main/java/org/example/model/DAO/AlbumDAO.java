@@ -107,12 +107,13 @@ public class AlbumDAO implements iDAO <Album,String> {
 
     @Override
     public Album save(Album entity) {
-        try {
+        Album result = null;
+
+        if (entity != null) {
             manager = Connection.getConnect().createEntityManager();
-            EntityTransaction transaction = manager.getTransaction();
 
             try {
-                transaction.begin();
+                manager.getTransaction().begin();
 
                 if (!manager.contains(entity)) {
                     // INSERT
@@ -122,22 +123,22 @@ public class AlbumDAO implements iDAO <Album,String> {
                     entity = manager.merge(entity);
                 }
 
-                transaction.commit();
+
+                manager.getTransaction().commit();
+                result = entity;
+
             } catch (Exception e) {
-                if (transaction.isActive()) {
-                    transaction.rollback();
-                }
                 e.printStackTrace();
-            } finally {
-                if (manager != null && manager.isOpen()) {
-                    manager.close();
+
+                if (manager.getTransaction().isActive()) {
+                    manager.getTransaction().rollback();
                 }
+            } finally {
+                manager.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
-        return entity;
+        return result;
     }
 
 
@@ -161,7 +162,7 @@ public class AlbumDAO implements iDAO <Album,String> {
                 Album albumToUpdate = manager.find(Album.class, album.getName());
 
                 if (albumToUpdate != null) {
-                    albumToUpdate.setNrepro(album.getNrepro());
+                    albumToUpdate.setnReproduction(album.getnReproduction());
                     manager.merge(albumToUpdate);
                 }
 
@@ -229,7 +230,7 @@ public class AlbumDAO implements iDAO <Album,String> {
             Album albumToUpdate = manager.find(Album.class, name);
             if (albumToUpdate != null) {
                 albumToUpdate.setName(newName);
-                albumToUpdate.setPublic_time(newPublicationDate);
+                albumToUpdate.setPublicTime(newPublicationDate);
                 albumToUpdate.setName(String.valueOf(newNameArtist));
                 manager.merge(albumToUpdate);
             }

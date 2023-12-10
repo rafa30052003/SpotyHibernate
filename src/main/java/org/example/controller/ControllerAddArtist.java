@@ -41,21 +41,21 @@ public class ControllerAddArtist implements Initializable {
     @FXML
     private Button foto;
 
-     ArtistDAO artistDAO = new ArtistDAO();
-/*
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            ArtistDAO artistDAO = new ArtistDAO();
-            List<String> artistNames = artistDAO.findNames();
-            ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
-            txtArtista.setItems(namesObservableList);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    ArtistDAO artistDAO = new ArtistDAO();
+    /*
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+            try {
+                ArtistDAO artistDAO = new ArtistDAO();
+                List<String> artistNames = artistDAO.findNames();
+                ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
+                txtArtista.setItems(namesObservableList);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
- */
+     */
     @FXML
     private void addArtist() {
         String name = txtName.getText();

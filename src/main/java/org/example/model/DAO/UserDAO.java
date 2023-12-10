@@ -6,6 +6,7 @@ import org.example.model.domain.User;
 import org.example.model.domain.Playlist;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -134,11 +135,25 @@ public class UserDAO implements iDAO<User, String> {
         }
     }
 
-    public User findUserByName(String name) {
+    /*public User findUserByName(String name) {
         Query query = manager.createQuery(FIND_USER_BY_NAME, User.class);
         query.setParameter("name", name);
         return (User) query.getSingleResult();
+    }*/
+
+
+    public User findUserByName(String name) {
+        Query query = manager.createQuery(FIND_USER_BY_NAME, User.class);
+        query.setParameter("name", name);
+
+        List<User> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return null; // O manejar de otra forma el caso en el que no se encuentre ningún resultado
+        } else {
+            return resultList.get(0); // Devolver el primer resultado de la lista
+        }
     }
+
     /**
      * funcion para hacer la subcrippcion de el usuario
      * @param idList
@@ -197,14 +212,26 @@ public class UserDAO implements iDAO<User, String> {
             System.out.println("Error al eliminar la suscripción");
         }
     }
-    public User findUserByNameAndPassword(String name, String password) {
+   /* public User findUserByNameAndPassword(String name, String password) {
         Query query = manager.createQuery(FIND_USER_BY_NAME_AND_PASSWORD, User.class);
         query.setParameter("name", name);
         query.setParameter("password", password);
         return (User) query.getSingleResult();
     }
 
+    */
+   public User findUserByNameAndPassword(String name, String password) {
+       try {
+           Query query = manager.createQuery(FIND_USER_BY_NAME_AND_PASSWORD, User.class);
+           query.setParameter("name", name);
+           query.setParameter("password", password);
+           List<User> resultList = query.getResultList();
 
+           return resultList.isEmpty() ? null : resultList.get(0);
+       } catch (NoResultException e) {
+           return null; // Manejar el caso en el que no se encuentra ningún usuario
+       }
+   }
 
     /**
      * funcion para validar si el usuario es admin o no
@@ -213,11 +240,23 @@ public class UserDAO implements iDAO<User, String> {
 
      */
 
-    public boolean isAdmin(String name) {
+   /* public boolean isAdmin(String name) {
         Query query = manager.createQuery(FINDBYNAME_ADMIN, User.class);
         query.setParameter("name", name);
         return !query.getResultList().isEmpty();
+    }*/
+    public boolean isAdmin(String name) {
+        try {
+            Query query = manager.createQuery(FINDBYNAME_ADMIN);
+            query.setParameter("name", name);
+            List<?> resultList = query.getResultList();
+            return !resultList.isEmpty();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
     public void close() {
         Connection.close();
     }

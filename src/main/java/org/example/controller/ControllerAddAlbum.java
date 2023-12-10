@@ -53,10 +53,10 @@ public class ControllerAddAlbum implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            ArtistDAO artistDAO = new ArtistDAO();
-            List<String> artistNames = artistDAO.findNames();
-            ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
-            txtArtista.setItems(namesObservableList);
+        ArtistDAO artistDAO = new ArtistDAO();
+        List<String> artistNames = artistDAO.findNames();
+        ObservableList<String> namesObservableList = FXCollections.observableArrayList(artistNames);
+        txtArtista.setItems(namesObservableList);
 
     }
     @FXML
@@ -72,32 +72,32 @@ public class ControllerAddAlbum implements Initializable {
             alert.showAndWait();
             return;
         }
-            File selectedFile = elegirFoto();
-            FileInputStream inputStream = new FileInputStream(selectedFile);
-            byte[] photo = new byte[inputStream.available()];
-            inputStream.read(photo);
+        File selectedFile = elegirFoto();
+        FileInputStream inputStream = new FileInputStream(selectedFile);
+        byte[] photo = new byte[inputStream.available()];
+        inputStream.read(photo);
 
-            Album album = new Album();
-            album.setName(name);
-            album.setPhoto(Arrays.toString(photo));
-            album.setPublic_time(java.sql.Date.valueOf(date));
-            album.setNrepro(0);
+        Album album = new Album();
+        album.setName(name);
+        album.setPhoto(Arrays.toString(photo).getBytes());
+        album.setPublicTime(java.sql.Date.valueOf(date));
+        album.setnReproduction(0);
 
-            Artist artistObject = new Artist();
-            artistObject.setName(artist);
-            album.setArtist(artistObject);
+        Artist artistObject = new Artist();
+        artistObject.setName(artist);
+        album.setArtist(artistObject);
 
-            AlbumDAO albumDAO = new AlbumDAO();
-            albumDAO.save(album);
+        AlbumDAO albumDAO = new AlbumDAO();
+        albumDAO.save(album);
 
-            txtName.clear();
-            txtArtista.setValue(null);
-            txtDate.setValue(null);
-            selectedImageFile=null;
-            imageView.setImage(null);
+        txtName.clear();
+        txtArtista.setValue(null);
+        txtDate.setValue(null);
+        selectedImageFile=null;
+        imageView.setImage(null);
 
-            System.out.println("Álbum guardado exitosamente.");
-        }
+        System.out.println("Álbum guardado exitosamente.");
+    }
 
     @FXML
     private File elegirFoto() {
@@ -124,9 +124,5 @@ public class ControllerAddAlbum implements Initializable {
         App.setRoot("homeAdmin");
     }
 }
-
-
-
-
 
 

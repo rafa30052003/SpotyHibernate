@@ -166,7 +166,7 @@ public class ControllerSong implements Initializable {
             }
         });
         List <Album> songsAlbum = (List<Album>) adao.findAll();
-         final ObservableList<Album> albumList = FXCollections.observableArrayList(songsAlbum);
+        final ObservableList<Album> albumList = FXCollections.observableArrayList(songsAlbum);
 
         //album
         album.setCellValueFactory(song -> new SimpleObjectProperty<>(song.getValue().getAlbum()));

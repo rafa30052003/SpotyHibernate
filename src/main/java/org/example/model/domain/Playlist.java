@@ -40,8 +40,9 @@ public class Playlist {
     //MANYTOMANY = USER (SUBCRIPTION)
     private Set<User> users;
     //ONETOMANY = COMENTARIO
-    @OneToMany(mappedBy = "PlayList", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "myList",  cascade = CascadeType.ALL)
     private List<Comment> comments;
+
 
     public Playlist(int id, String description, String name_list, String name_user) {
         this.id = id;

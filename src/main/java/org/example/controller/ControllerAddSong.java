@@ -58,26 +58,23 @@ public class ControllerAddSong implements Initializable {
         }
         try {
             Album albumObject = new Album();
-              Song s = new Song();
-              s.setName_song(name);
-              s.setGender(gender);
-              s.setDuration(duration);
-              Album a = new Album();
-              a.setName(album);
-              s.setAlbum(a);
-              s.setNrepro(repro);
-              s.setArchive_song(audioFilePath);
+            Song s = new Song();
+            s.setName_song(name);
+            s.setGender(gender);
+            s.setDuration(duration);
+            Album a = new Album();
+            a.setName(album);
+            s.setAlbum(a);
+            s.setNrepro(repro);
+            s.setArchive_song(audioFilePath);
 
-              sdao.save(s);
-             App.setRoot("HomeAdmin");
+            sdao.save(s);
+            App.setRoot("HomeAdmin");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
-
 
 
     @FXML
@@ -93,3 +90,4 @@ public class ControllerAddSong implements Initializable {
     }
 
 }
+
