@@ -160,22 +160,31 @@ public class UserDAO implements iDAO<User, String> {
 
      */
     public void addSubscription(String nameUser, int idList) {
+        EntityManager manager = null;
+
         try {
+            manager = Connection.getConnect().createEntityManager();
             manager.getTransaction().begin();
 
-            Query query = manager.createNativeQuery(INSERT_SUBSCRIPTION,User.class);
+            String INSERT_SUBSCRIPTION = "INSERT INTO subscription (name_user, id_list) VALUES (:nameUser, :idList)";
+            Query query = manager.createNativeQuery(INSERT_SUBSCRIPTION);
             query.setParameter("nameUser", nameUser);
             query.setParameter("idList", idList);
             query.executeUpdate();
 
             manager.getTransaction().commit();
         } catch (Exception e) {
-            if (manager.getTransaction().isActive()) {
+            if (manager != null && manager.getTransaction().isActive()) {
                 manager.getTransaction().rollback();
             }
             e.printStackTrace();
+        } finally {
+            if (manager != null) {
+                manager.close();
+            }
         }
     }
+
     /**
      * funcion para borrar la subcripcion para la lista
      * @param nameUser
@@ -247,7 +256,7 @@ public class UserDAO implements iDAO<User, String> {
     }*/
     public boolean isAdmin(String name) {
         try {
-            Query query = manager.createQuery(FINDBYNAME_ADMIN);
+            Query query = manager.createQuery("SELECT a FROM Admin a WHERE a.name = :name");
             query.setParameter("name", name);
             List<?> resultList = query.getResultList();
             return !resultList.isEmpty();

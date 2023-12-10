@@ -30,8 +30,8 @@ public class User implements Serializable {
     @ManyToMany
     @JoinTable(
             name = "subscription",
-            joinColumns = @JoinColumn(name = "user_name"),
-            inverseJoinColumns = @JoinColumn(name = "list_id")
+            joinColumns = @JoinColumn(name = "name_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_list")
     )
     private List<Playlist> lists;
 

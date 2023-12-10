@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.App;
 import org.example.model.DAO.UserDAO;
+import org.example.model.domain.Admin;
 import org.example.model.domain.User;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -39,38 +40,7 @@ public class ControllerLogin {
         login();
     }
 
-    /*@FXML
-    private void login() throws IOException, SQLException {
-        String username = textName.getText();
-        String password = textPassword.getText();
 
-        UserDAO userDAO = new UserDAO();
-
-        // Busca al usuario en la tabla user
-        User user = userDAO.findUserByNameAndPassword(username, password);
-
-        if (user != null && BCrypt.checkpw(password, user.getPassword()) && userDAO.isAdmin(username)) {
-            // La contraseña coincide, guarda los campos del usuario logueado en las variables
-            loggedInUserName = user.getName();
-            loggedInUserMail = user.getMail();
-            loggedInUserPhoto = user.getPhoto();
-            loggedInUserPassword= user.getPassword();
-            App.setRoot("homeAdmin");
-        }  else if (user != null && BCrypt.checkpw(password, user.getPassword()) && userDAO.isAdmin(username)==false) {
-            loggedInUserName = user.getName();
-            loggedInUserMail = user.getMail();
-            loggedInUserPhoto = user.getPhoto();
-            loggedInUserPassword= user.getPassword();
-            App.setRoot("homeUser");
-        }else {
-            // Si no se encontró un usuario con el nombre y contraseña correctos, muestra un mensaje de error
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de acceso");
-            alert.setHeaderText(null);
-            alert.setContentText("Usuario o contraseña incorrectos");
-            alert.showAndWait();
-        }
-    }*/
     @FXML
     private void login() throws IOException, SQLException {
         String username = textName.getText();
@@ -78,7 +48,7 @@ public class ControllerLogin {
 
         UserDAO userDAO = new UserDAO();
 
-        // Busca al usuario en la tabla user
+        // Busca al usuario en la tabla User
         User user = userDAO.findUserByName(username);
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
@@ -89,14 +59,15 @@ public class ControllerLogin {
                 loggedInUserPhoto = user.getPhoto();
                 loggedInUserPassword = user.getPassword(); // Aquí puedes almacenar la contraseña hasheada si la necesitas
                 App.setRoot("homeAdmin");
-            } else {
-                // La contraseña coincide y no es un administrador
-                loggedInUserName = user.getName();
-                loggedInUserMail = user.getMail();
-                loggedInUserPhoto = user.getPhoto();
-                loggedInUserPassword = user.getPassword(); // Aquí puedes almacenar la contraseña hasheada si la necesitas
-                App.setRoot("homeUser");
+                return; // Sale del método para evitar la redirección a 'homeUser'
             }
+
+            // La contraseña coincide pero no es un administrador
+            loggedInUserName = user.getName();
+            loggedInUserMail = user.getMail();
+            loggedInUserPhoto = user.getPhoto();
+            loggedInUserPassword = user.getPassword(); // Aquí puedes almacenar la contraseña hasheada si la necesitas
+            App.setRoot("homeAdmin");
         } else {
             // Si no se encontró un usuario con el nombre y contraseña correctos, muestra un mensaje de error
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -106,8 +77,6 @@ public class ControllerLogin {
             alert.showAndWait();
         }
     }
-
-
     // Métodos para acceder a los campos del usuario logueado desde otras clases
     public static String getLoggedInUserName() {
         return loggedInUserName;

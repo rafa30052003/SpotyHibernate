@@ -522,8 +522,8 @@ public class ControllerUserHome {
 
 
         columnnName_Albun.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnn_Publication_dateAlbun.setCellValueFactory(new PropertyValueFactory<>("public_time"));
-        columnn_N_reproduction.setCellValueFactory(new PropertyValueFactory<>("nrepro"));
+        columnn_Publication_dateAlbun.setCellValueFactory(new PropertyValueFactory<>("publicTime"));
+        columnn_N_reproduction.setCellValueFactory(new PropertyValueFactory<>("n_reproduction"));
         columnn_Albun_NameArtistAlbun.setCellValueFactory(data -> {
             Artist artist = data.getValue().getArtist();
             String artistName = (artist != null) ? artist.getName() : "";
@@ -718,7 +718,7 @@ public class ControllerUserHome {
      */
     @FXML
     private <list> void buttonShowList() {
-        try {
+
             // Llama a tu DAO para obtener todas las listas en la base de datos
             ListDAO listDAO = new ListDAO();
             List<list> allLists = (List<list>) listDAO.findAllNameLists();
@@ -729,10 +729,7 @@ public class ControllerUserHome {
             // Asigna las listas al ListView 'listMyList'
             listMyList.setItems((ObservableList<String>) allListsObservable);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejar errores de base de datos
-        }
+
     }
 
     /**
@@ -745,14 +742,10 @@ public class ControllerUserHome {
         String selectedListName = listMyList.getSelectionModel().getSelectedItem();
 
         if (selectedListName != null) {
-            try {
                 int listId = listDAO.findIdByName(selectedListName);
                 selectedListId = listId;
                 System.out.println("ID de la lista seleccionada: " + selectedListId);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // Handle database errors
-            }
+
         }
     }
 
@@ -797,7 +790,6 @@ public class ControllerUserHome {
      */
     @FXML
     private void buttonShowMyList() {
-        try {
             // Llama a tu DAO para obtener todas las listas en la base de datos
             ListDAO listDAO = new ListDAO();
             List<String> allLists = listDAO.findAllNameListsByUser(ControllerLogin.getLoggedInUserName());
@@ -808,10 +800,7 @@ public class ControllerUserHome {
             // Asigna las listas al ListView 'listMyList'
             listMyList.setItems(allListsObservable);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejar errores de base de datos
-        }
+
     }
 
     /**
@@ -821,12 +810,9 @@ public class ControllerUserHome {
     private void handleDeleteList() {
         // Verifica que se haya seleccionado una lista antes de intentar borrar
         if (selectedListId != -1) {
-            try {
                 listDAO.delete(selectedListId);
                 showInformation("Lista borrada", "Lista borrada con éxito");
-            } catch (SQLException e) {
-                showValidationError("Error al borrar la lista");
-            }
+
         } else {
             showValidationError("No se ha seleccionado ninguna lista para borrar.");
         }
@@ -837,7 +823,7 @@ public class ControllerUserHome {
      */
     @FXML
     private void buttonShowMyListSub() {
-        try {
+
             // Llama a tu DAO para obtener todas las listas en la base de datos
             ListDAO listDAO = new ListDAO();
             List<String> allLists = listDAO.findSubscribedLists(ControllerLogin.getLoggedInUserName());
@@ -848,10 +834,7 @@ public class ControllerUserHome {
             // Asigna las listas al ListView 'listMyList'
             listMyList.setItems(allListsObservable);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Manejar errores de base de datos
-        }
+
     }
 
     /**

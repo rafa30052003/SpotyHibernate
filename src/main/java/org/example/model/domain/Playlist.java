@@ -4,18 +4,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 @Entity
-@Table(name = "Playlist")
+@Table(name = "list")
 
 public class Playlist {
     @Id
     @GeneratedValue
     @Column(name = "id")
     public int id;
-    @Column(name = "DESCRIPTION")
+    @Column(name = "description")
     public String description;
-    @Column(name = "NAMELIST")
+    @Column(name = "name_list")
     public String name_list;
-    @Column(name = "NAMEUSER")
+    @Column(name = "name_user")
     public String name_user;
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "song_list",
